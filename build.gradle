@@ -3,7 +3,11 @@ import java.text.SimpleDateFormat
 plugins {
     id "java"
     id "com.github.gmazzo.buildconfig" version "1.6.2"
-    id "edu.wpi.first.GradleRIO" version "2020.3.2"
+    id "edu.wpi.first.GradleRIO" version "2021.3.1"
+}
+
+task wrapper(type: Wrapper) {
+   gradleVersion = '3.3' //version required
 }
 
 sourceCompatibility = JavaVersion.VERSION_11
