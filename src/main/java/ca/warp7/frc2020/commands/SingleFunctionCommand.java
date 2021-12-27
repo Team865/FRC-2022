@@ -68,17 +68,6 @@ public class SingleFunctionCommand {
         return new InstantCommand(driveTrain::zeroYaw);
     }
 
-    public static Command getClimbLockToggle() {
-        Climber climber = Climber.getInstance();
-        return new InstantCommand(climber::toggleLock);
-    }
-
-    public static Command getIntakeExtensionToggle() {
-        Intake intake = Intake.getInstance();
-        return new InstantCommand(intake::toggle);
-    }
-
-
     public static Command getFlywheelSetHoodCloseCommand() {
         Flywheel flywheel = Flywheel.getInstance();
         return new InstantCommand(() -> flywheel.setHoodCloseShot(true));

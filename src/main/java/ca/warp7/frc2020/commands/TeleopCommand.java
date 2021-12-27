@@ -31,13 +31,7 @@ public class TeleopCommand extends CommandBase {
     private Command visionAlignCommand = new VisionAlignCommand(this::getVisionAlignSpeed);
 
     //    private Command controlPanelDisplay = new ControlPanelCommand(this::getControlPanelSpinnerSpeed);
-    private Command feedCommand = new FeedCommand(this::getFeedSpeed);
-    private Command intakingCommand = new IntakingCommand(this::getIntakeSpeed);
     private Command flywheelSpeedCommand = new FlywheelSpeedCommand(this::getWantedFlywheelRPS);
-
-    private Command climbSpeedOptionalCommand = Constants.isPracticeRobot() ?
-            new InstantCommand() :
-            new ClimbSpeedCommand(this::getClimbSpeed);
 
     private Command resetRobotStateCommand = new RobotStateCommand();
 
@@ -48,10 +42,6 @@ public class TeleopCommand extends CommandBase {
 
     //  private Command flywheelHoodToggleCommand = SingleFunctionCommand.getFlywheelHoodToggle();
 
-
-    private Command climbLockToggleOptionalCommand = Constants.isPracticeRobot() ?
-            new InstantCommand() :
-            SingleFunctionCommand.getClimbLockToggle();
     private Command flywheelSetHoodCloseCommand = SingleFunctionCommand.getFlywheelSetHoodCloseCommand();
     private Command flywheelSetHoodFarCommand = SingleFunctionCommand.getFlywheelSetHoodFarCommand();
 
@@ -131,10 +121,6 @@ public class TeleopCommand extends CommandBase {
         setLowGearDriveCommand.schedule();
         curvatureDriveCommand.schedule();
         flywheelSpeedCommand.schedule();
-        feedCommand.schedule();
-        // controlPanelDisplay.schedule();
-        climbSpeedOptionalCommand.schedule();
-        intakingCommand.schedule();
         brakeCommand.schedule();
     }
 
@@ -199,7 +185,5 @@ public class TeleopCommand extends CommandBase {
             else farShotAdjustment += 5;
         }
 
-        if (operator.startButton.isPressed())
-            climbLockToggleOptionalCommand.schedule();
     }
 }

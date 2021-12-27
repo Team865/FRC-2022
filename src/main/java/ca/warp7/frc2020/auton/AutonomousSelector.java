@@ -20,19 +20,11 @@ public class AutonomousSelector {
     private AnalogInput a4 = new AnalogInput(3);
 
     public SelectedMode getSelectedMode() {
-        if (a1.getAverageVoltage() > 0) return SelectedMode.Mode_1;
-        if (a2.getAverageVoltage() > 0) return SelectedMode.Mode_2;
-        if (a3.getAverageVoltage() > 0) return SelectedMode.Mode_3;
-        if (a4.getAverageVoltage() > 0) return SelectedMode.Mode_4;
         return SelectedMode.NothingMode;
     }
 
     public enum SelectedMode {
-        NothingMode(InstantCommand::new),
-        Mode_1(AutonomousMode::shoot3_backup),
-        Mode_2(AutonomousMode::intakeThreeBalls),
-        Mode_3(AutonomousMode::shoot3_intake3_shoot3),
-        Mode_4(AutonomousMode::simplePath);
+        NothingMode(InstantCommand::new);
 
         private Supplier<Command> mode;
 

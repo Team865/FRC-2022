@@ -62,15 +62,8 @@ public final class Robot extends TimedRobot {
                 DriveTrain.getInstance(),
                 Infrastructure.getInstance(),
                 Flywheel.getInstance(),
-                Feeder.getInstance(),
-                Hopper.getInstance(),
-                Intake.getInstance(),
                 Limelight.getInstance()
         );
-
-        if (!Constants.isPracticeRobot()) {
-            scheduler.registerSubsystem(Climber.getInstance());
-        }
 
         // Create commands
         disabledCommand = new DisabledCommand();
