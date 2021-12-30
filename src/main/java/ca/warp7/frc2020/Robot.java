@@ -61,7 +61,6 @@ public final class Robot extends TimedRobot {
         scheduler.registerSubsystem(
                 DriveTrain.getInstance(),
                 Infrastructure.getInstance(),
-                Flywheel.getInstance(),
                 Limelight.getInstance()
         );
 

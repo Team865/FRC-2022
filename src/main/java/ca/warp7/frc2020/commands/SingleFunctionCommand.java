@@ -68,16 +68,6 @@ public class SingleFunctionCommand {
         return new InstantCommand(driveTrain::zeroYaw);
     }
 
-    public static Command getFlywheelSetHoodCloseCommand() {
-        Flywheel flywheel = Flywheel.getInstance();
-        return new InstantCommand(() -> flywheel.setHoodCloseShot(true));
-    }
-
-    public static Command getFlywheelSetHoodFarCommand() {
-        Flywheel flywheel = Flywheel.getInstance();
-        return new InstantCommand(() -> flywheel.setHoodCloseShot(false));
-    }
-
     public static Command getStartCompressor() {
         Infrastructure infrastructure = Infrastructure.getInstance();
         return new InstantCommand(infrastructure::startCompressor);

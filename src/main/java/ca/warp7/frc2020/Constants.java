@@ -36,26 +36,10 @@ public final class Constants {
     public static final int kDriveRightMasterID = 34;
     public static final int kDriveRightFollowerID = 33;
 
-    public static final int kFlywheelShooterMasterID = 20;
-    public static final int kFlywheelShooterFollowerID = 22;
-
-    public static final int kHopperID = 24;
-    public static final int kIntakeID = 26;
-
-    public static final int kClimberMasterID = 6;
-    public static final int kClimberFollowerID = 7;
-
-    public static final int kFeederOuterID = 1;
-    public static final int kFeederInnerID = 2;
-
     public static final int kControlPanelManipulatorID = -1;
 
 
     // PCM IDs
-
-    public static final int kFlywheelHoodActuatorID = 7;
-    public static final int kIntakeExtensionID = 6;
-    public static final int kClimberLockActuatorID = 5;
     public static final int kDriveShifterID = 4;
 
     // DIO IDs
@@ -78,16 +62,6 @@ public final class Constants {
     // units: degrees => percent
     public static final PID kQuickTurnPID =
             new PID(0.04, 0.0, 0.0, 0.0);
-
-    // Flywheel Tuning
-
-    public static final double kFlywheelDefaultCloseRPS = 57.0;
-    public static final double kFlywheelFarRPS = 100.0;
-    public static final double kFlywheelKp = 1.94;
-    public static final double kFlywheelKs = 0.0911;
-    public static final double kFlywheelKv = (0.0644 + 0.063) / 2;
-    public static final double kFlywheelKa = (0.0401 + 0.0483) / 2;
-    public static final double kFlywheelGearRatio = 1.0 / 2.0; // 0.5
 
     public static final double kMaxInnerGoalDist = 6.0; // meters
 

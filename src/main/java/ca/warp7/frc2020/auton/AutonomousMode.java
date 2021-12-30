@@ -2,8 +2,6 @@ package ca.warp7.frc2020.auton;
 
 import ca.warp7.frc2020.auton.commands.*;
 import ca.warp7.frc2020.commands.SingleFunctionCommand;
-import ca.warp7.frc2020.subsystems.Flywheel;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;

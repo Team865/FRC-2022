@@ -12,7 +12,6 @@ import ca.warp7.frc2020.auton.commands.RobotStateCommand;
 import ca.warp7.frc2020.auton.commands.VisionAlignCommand;
 import ca.warp7.frc2020.lib.Util;
 import ca.warp7.frc2020.lib.XboxController;
-import ca.warp7.frc2020.subsystems.Flywheel;
 import ca.warp7.frc2020.subsystems.Limelight;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -31,7 +30,6 @@ public class TeleopCommand extends CommandBase {
     private Command visionAlignCommand = new VisionAlignCommand(this::getVisionAlignSpeed);
 
     //    private Command controlPanelDisplay = new ControlPanelCommand(this::getControlPanelSpinnerSpeed);
-    private Command flywheelSpeedCommand = new FlywheelSpeedCommand(this::getWantedFlywheelRPS);
 
     private Command resetRobotStateCommand = new RobotStateCommand();
 
@@ -39,11 +37,6 @@ public class TeleopCommand extends CommandBase {
     private Command setHighGearDriveCommand = SingleFunctionCommand.getSetDriveHighGear();
     private Command zeroYawCommand = SingleFunctionCommand.getZeroYaw();
     private Command brakeCommand = SingleFunctionCommand.getSetDriveBrakeMode();
-
-    //  private Command flywheelHoodToggleCommand = SingleFunctionCommand.getFlywheelHoodToggle();
-
-    private Command flywheelSetHoodCloseCommand = SingleFunctionCommand.getFlywheelSetHoodCloseCommand();
-    private Command flywheelSetHoodFarCommand = SingleFunctionCommand.getFlywheelSetHoodFarCommand();
 
     private XboxController driver = new XboxController(0);
     private XboxController operator = new XboxController(1);
@@ -55,18 +48,6 @@ public class TeleopCommand extends CommandBase {
     private double closeShotAdjustment = 0.0;
     private boolean isClose = false;
     private boolean isPriming = false;
-
-    private double getWantedFlywheelRPS() {
-        if (isPriming) {
-            if (!isClose) {
-                return Constants.kFlywheelFarRPS + farShotAdjustment;
-            } else {
-                return Flywheel.getOptimalCloseShotRPS() + closeShotAdjustment;
-            }
-        }
-        return 0;
-    }
-
 
 //    public double getControlPanelSpinnerSpeed() {
 //        return operator.rightX;
@@ -120,7 +101,6 @@ public class TeleopCommand extends CommandBase {
 
         setLowGearDriveCommand.schedule();
         curvatureDriveCommand.schedule();
-        flywheelSpeedCommand.schedule();
         brakeCommand.schedule();
     }
 
@@ -158,12 +138,10 @@ public class TeleopCommand extends CommandBase {
         if (operator.leftTrigger > 0.2) {
             isPriming = true;
             isClose = true;
-            flywheelSetHoodCloseCommand.schedule();
             Limelight.getInstance().setPipeline(0);
         } else if (operator.rightTrigger > 0.3) {
             isPriming = true;
             isClose = false;
-            flywheelSetHoodFarCommand.schedule();
             Limelight.getInstance().setPipeline(1);
         } else
             isPriming = false;
