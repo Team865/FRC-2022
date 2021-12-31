@@ -14,10 +14,11 @@ public class AutonomousCommand extends CommandBase {
     public void initialize() {
 
         Command mode;
-        if (Constants.isPracticeRobot()) {
+        //if (Constants.isPracticeRobot()) {
             mode = AutonomousMode.simplePath();
-        } else {
+        //} else {
 //            mode = selector.getSelectedMode().create();
-        }
+        //}
+        mode.schedule();
     }
 }
