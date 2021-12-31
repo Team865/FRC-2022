@@ -36,7 +36,7 @@ public final class Constants {
     public static final int kDriveRightMasterID = 34;
     public static final int kDriveRightFollowerID = 33;
 
-    public static final int kControlPanelManipulatorID = -1;
+    //public static final int kControlPanelManipulatorID = -1;
 
 
     // PCM IDs
@@ -44,7 +44,7 @@ public final class Constants {
 
     // DIO IDs
 
-    public static final int kBeamBreakID = 1;
+    //public static final int kBeamBreakID = 1;
 
     // Drive Train Tuning
 
@@ -116,6 +116,6 @@ public final class Constants {
     }
 
     public static boolean isPracticeRobot() {
-        return false;
+        return true;
     }
 }

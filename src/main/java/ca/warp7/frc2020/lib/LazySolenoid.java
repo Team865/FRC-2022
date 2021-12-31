@@ -8,6 +8,7 @@ public class LazySolenoid {
     private boolean on = false;
 
     public LazySolenoid(int channel, boolean enabled) {
+        enabled = false;
         this.enabled = enabled;
         if (enabled) {
             this.solenoid = new Solenoid(channel);

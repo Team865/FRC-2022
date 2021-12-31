@@ -178,7 +178,7 @@ public class DriveTrajectoryCommand extends CommandBase {
 
     private void putNumber(String key, double value) {
         if (!isFMSAttached) {
-            SmartDashboard.putNumber(key, value);
+            //SmartDashboard.putNumber(key, value);
         }
     }
 }

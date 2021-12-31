@@ -13,16 +13,16 @@ public class Infrastructure implements Subsystem {
         return instance;
     }
 
-    private Compressor compressor = new Compressor();
+    //private Compressor compressor = new Compressor();
 
     private Infrastructure() {
     }
 
     public void startCompressor() {
-        compressor.start();
+        //compressor.start();
     }
 
     public void stopCompressor() {
-        compressor.stop();
+        //compressor.stop();
     }
 }
