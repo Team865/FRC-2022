@@ -15,7 +15,7 @@ public class AutonomousCommand extends CommandBase {
 
         Command mode;
         //if (Constants.isPracticeRobot()) {
-            mode = AutonomousMode.simplePath();
+            mode = AutonomousMode.squarePath();
         //} else {
 //            mode = selector.getSelectedMode().create();
         //}

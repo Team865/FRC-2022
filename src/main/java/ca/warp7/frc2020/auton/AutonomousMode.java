@@ -29,8 +29,16 @@ public class AutonomousMode {
     public static Command simplePath() {
         return new SequentialCommandGroup(
                 SingleFunctionCommand.getResetAutonomousDrive(),
-                new RobotStateCommand(AutonomousPath.kRightSideFacingOuterGoal),
-                AutonomousPath.getTrenchOneBall()
+                new RobotStateCommand(AutonomousPath.kOrigin),
+                AutonomousPath.getOneMetreForward()
+        );
+    }
+
+    public static Command squarePath(){
+        return new SequentialCommandGroup(
+                SingleFunctionCommand.getResetAutonomousDrive(),
+                new RobotStateCommand(AutonomousPath.kOrigin),
+                AutonomousPath.getMetreDistanceForward(1.0)
         );
     }
 }
