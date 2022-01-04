@@ -9,7 +9,7 @@ plugins {
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
 
-def ROBOT_MAIN_CLASS = "ca.warp7.frc2020.Main"
+def ROBOT_MAIN_CLASS = "ca.warp7.frc2022.Main"
 def DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm")
 
 def getLatestGitCommitHash = { ->
@@ -27,7 +27,7 @@ def getLatestGitCommitHash = { ->
 }
 
 buildConfig {
-    packageName("ca.warp7.frc2020")
+    packageName("ca.warp7.frc2022")
 
     buildConfigField("String", "kDeployUser", "\"${System.getProperty("user.name")}\"")
     buildConfigField("String", "kDeployTime", "\"${DATE_FORMAT.format(new Date())}\"")

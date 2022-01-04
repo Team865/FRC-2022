@@ -12,13 +12,8 @@ public class AutonomousCommand extends CommandBase {
     @SuppressWarnings({"ConstantConditions", "StatementWithEmptyBody"})
     @Override
     public void initialize() {
-
         Command mode;
-        //if (Constants.isPracticeRobot()) {
-            mode = AutonomousMode.squarePath();
-        //} else {
-//            mode = selector.getSelectedMode().create();
-        //}
+        mode = AutonomousMode.circlePath();
         mode.schedule();
     }
 }

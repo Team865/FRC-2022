@@ -25,91 +25,18 @@ public class AutonomousPath {
         return new TrajectoryConfig(2.2, 2.2)
                 .addConstraint(kKinematicsConstraint);
     }
-
-    public static final Pose2d kTrench1 = new Pose2d(5.85, 3.38, new Rotation2d());
-    public static final Pose2d kTrench3 = new Pose2d(7.80, 3.38, new Rotation2d());
-
+    
     public static final Pose2d kOrigin =
             new Pose2d(0.0, 0.0, new Rotation2d());
 
-    public static final Pose2d kRightSideFacingOuterGoal =
-            new Pose2d(3.1, 3.0, Rotation2d.fromDegrees(23));
-
-    public static final Pose2d kLeftInitLine =
-            new Pose2d(3.5, -3.38, new Rotation2d());
-
-    public static final Pose2d kOpponentTrench2 =
-            new Pose2d(6.0, -3.38, new Rotation2d());
-
-    public static final Pose2d kCentreFieldshoot =
-            new Pose2d(3.1, 0.0, Rotation2d.fromDegrees(-28));
-
-    public static final Pose2d kTrenchCorner =
-            new Pose2d(5.3, 2.9, Rotation2d.fromDegrees(13));
-
-    public static final Pose2d kTurn90From1Meter =
-            new Pose2d(1.0, 0.0, Rotation2d.fromDegrees(90));
-
-    public static Command getTrenchThreeBalls() {
-        return new TimedPath2d("one ball", kRightSideFacingOuterGoal)
-                .addPoint(kTrench1)
-                .addPoint(kTrench3)
-                .setConfig(createTrajectoryConfig())
-                .setFollower(new RamseteFollower())
-                .convertTo(DriveTrajectoryCommand::new);
-    }
-
-    public static Command getTrenchThreeBallsToCorner() {
-        return new TimedPath2d("one ball reversed", kTrench3)
-                .addPoint(kTrenchCorner)
-                .setConfig(createTrajectoryConfig())
-                .setReversed(true)
-                .setFollower(new RamseteFollower())
-                .convertTo(DriveTrajectoryCommand::new);
-    }
-
-    public static Command getTrenchOneBall() {
-        return new TimedPath2d("three balls", kRightSideFacingOuterGoal)
-                .addPoint(kTrench1)
-                .setConfig(createTrajectoryConfig())
-                .setFollower(new RamseteFollower())
-                .convertTo(DriveTrajectoryCommand::new);
-    }
-
-    public static Command getOneMetreForward() {
-        return new TimedPath2d("one metre forward", new Pose2d())
-                .addPoint(1.0, 0.0, 0.0)
-                .setConfig(createTrajectoryConfig())
-                .setFollower(new RamseteFollower())
-                .convertTo(DriveTrajectoryCommand::new);
-    }
-
-
-    public static Command getMetreDistanceForward(double distance) {
-        return new TimedPath2d(distance + " metre(s) forward", new Pose2d())
+    public static Command getCircle() {
+        return new TimedPath2d("Circle movement.", new Pose2d())
                 .addPoint(new Pose2d(1.25, -0.75, Rotation2d.fromDegrees(0.0)))
                 .addPoint(new Pose2d(2.5, 0, Rotation2d.fromDegrees(90.0)))
                 .addPoint(new Pose2d(1.25, 0.75, Rotation2d.fromDegrees(180.0)))
                 .addPoint(new Pose2d(0.0, 0.0, Rotation2d.fromDegrees(270)))
                 .addPoint(new Pose2d(1.25, -0.75, Rotation2d.fromDegrees(0.0)))
                 .setConfig(createTrajectoryConfig())
-                .setFollower(new RamseteFollower())
-                .convertTo(DriveTrajectoryCommand::new);
-    }
-
-    public static Command getOpponentTrenchTwoBalls() {
-        return new TimedPath2d("opponent trench two balls", kLeftInitLine)
-                .addPoint(kOpponentTrench2)
-                .setConfig(createTrajectoryConfig())
-                .setFollower(new RamseteFollower())
-                .convertTo(DriveTrajectoryCommand::new);
-    }
-
-    public static Command getOpponentTrechTwoBallsToShoot() {
-        return new TimedPath2d("OpponentTrechTwoBallsToShoot", kOpponentTrench2)
-                .addPoint(kCentreFieldshoot)
-                .setConfig(createTrajectoryConfig())
-                .setReversed(true)
                 .setFollower(new RamseteFollower())
                 .convertTo(DriveTrajectoryCommand::new);
     }

@@ -9,36 +9,11 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 @SuppressWarnings("unused")
 public class AutonomousMode {
-    public static Command driveLowGearCharacterization() {
-        return new SequentialCommandGroup(
-                SingleFunctionCommand.getResetAutonomousDrive(),
-                SingleFunctionCommand.getStopCompressor(),
-                new DriveCharacterizationCommand()
-        );
-    }
-
-    public static Command driveHighGearCharacterization() {
-        return new SequentialCommandGroup(
-                SingleFunctionCommand.getResetAutonomousDrive(),
-                SingleFunctionCommand.getSetDriveHighGear(),
-                SingleFunctionCommand.getStopCompressor(),
-                new DriveCharacterizationCommand()
-        );
-    }
-
-    public static Command simplePath() {
+    public static Command circlePath(){
         return new SequentialCommandGroup(
                 SingleFunctionCommand.getResetAutonomousDrive(),
                 new RobotStateCommand(AutonomousPath.kOrigin),
-                AutonomousPath.getOneMetreForward()
-        );
-    }
-
-    public static Command squarePath(){
-        return new SequentialCommandGroup(
-                SingleFunctionCommand.getResetAutonomousDrive(),
-                new RobotStateCommand(AutonomousPath.kOrigin),
-                AutonomousPath.getMetreDistanceForward(1.0)
+                AutonomousPath.getCircle()
         );
     }
 }
