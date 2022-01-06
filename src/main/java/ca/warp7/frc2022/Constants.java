@@ -63,23 +63,6 @@ public final class Constants {
     public static final PID kQuickTurnPID =
             new PID(0.04, 0.0, 0.0, 0.0);
 
-    public static final double kMaxInnerGoalDist = 6.0; // meters
-
-    // the difference in where you are aiming
-    public static final double kInnerToOuterGoalAdjustment = 0.7; //meters
-
-    public static double getOptimaInnerGoalRPS(double metersFromGoal) {
-        return 1.95 *Math.pow(metersFromGoal - 4.12821,2) + 59.8679;
-//        return 2.79 * Math.pow(metersFromGoal - 4.10, 2) + 55.01;
-    }
-
-    //Feeder Constants
-
-    public static final double kFeedingSpeed = 0.4; //percent
-
-    //Hopper constants
-
-    public static final double kHopperSpeed = 0.4; //percent
 
     // Drive Train Constants
 
