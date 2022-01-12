@@ -41,12 +41,6 @@ public final class Robot extends TimedRobot {
     public void robotInit() {
         System.out.println("Hello me is robit!");
 
-        // Print out software version
-        SmartDashboard.putString("Build Date", BuildConfig.kDeployTime);
-        SmartDashboard.putString("Deploy User", BuildConfig.kDeployUser);
-        SmartDashboard.putString("Git Revision", BuildConfig.kGitRevision);
-        SmartDashboard.putBoolean("Practice Bot", Constants.isPracticeRobot());
-
         DriveTrain.setVariant(new FalconDriveTrainVariant());
 
         scheduler = CommandScheduler.getInstance();

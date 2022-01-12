@@ -1,7 +1,7 @@
 package ca.warp7.frc2022.lib.control;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpiutil.math.MathUtil;
+import edu.wpi.first.math.MathUtil;
 
 /**
  * Implements a PID control loop.

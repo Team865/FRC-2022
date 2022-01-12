@@ -1,7 +1,7 @@
 package ca.warp7.frc2022.auton.commands;
 
 import ca.warp7.frc2022.subsystems.DriveTrain;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import java.util.function.Supplier;

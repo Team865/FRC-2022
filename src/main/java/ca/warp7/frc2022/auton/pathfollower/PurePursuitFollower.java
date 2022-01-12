@@ -2,10 +2,10 @@ package ca.warp7.frc2022.auton.pathfollower;
 
 import ca.warp7.frc2022.lib.trajectory.ChassisVelocity;
 import ca.warp7.frc2022.lib.trajectory.PathFollower;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Transform2d;
-import edu.wpi.first.wpilibj.geometry.Twist2d;
-import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.math.geometry.Twist2d;
+import edu.wpi.first.math.trajectory.Trajectory;
 
 public class PurePursuitFollower implements PathFollower {
 

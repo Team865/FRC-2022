@@ -4,12 +4,12 @@ import ca.warp7.frc2022.Constants;
 import ca.warp7.frc2022.auton.commands.DriveTrajectoryCommand;
 import ca.warp7.frc2022.auton.pathfollower.RamseteFollower;
 import ca.warp7.frc2022.lib.trajectory.TimedPath2d;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
-import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveKinematicsConstraint;
-import edu.wpi.first.wpilibj.trajectory.constraint.TrajectoryConstraint;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.constraint.DifferentialDriveKinematicsConstraint;
+import edu.wpi.first.math.trajectory.constraint.TrajectoryConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
 
 @SuppressWarnings({"unused", "Unused"})

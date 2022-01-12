@@ -1,7 +1,7 @@
 package ca.warp7.frc2022.lib.trajectory;
 
-import edu.wpi.first.wpilibj.geometry.Transform2d;
-import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.math.trajectory.Trajectory;
 
 /**
  * Calculates the resulting velocity based on the trajectory and error

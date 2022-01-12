@@ -1,11 +1,11 @@
 package ca.warp7.frc2022.lib.trajectory;
 
-import edu.wpi.first.wpilibj.geometry.*;
-import edu.wpi.first.wpilibj.spline.PoseWithCurvature;
-import edu.wpi.first.wpilibj.trajectory.Trajectory;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryParameterizer;
-import edu.wpi.first.wpilibj.trajectory.constraint.TrajectoryConstraint;
+import edu.wpi.first.math.geometry.*;
+import edu.wpi.first.math.spline.PoseWithCurvature;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryParameterizer;
+import edu.wpi.first.math.trajectory.constraint.TrajectoryConstraint;
 
 import java.util.ArrayList;
 import java.util.Arrays;

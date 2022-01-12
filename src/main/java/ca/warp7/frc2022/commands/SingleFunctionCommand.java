@@ -1,7 +1,7 @@
 package ca.warp7.frc2022.commands;
 
 import ca.warp7.frc2022.subsystems.*;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;

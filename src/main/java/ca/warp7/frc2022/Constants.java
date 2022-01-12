@@ -9,7 +9,7 @@ package ca.warp7.frc2022;
 
 import ca.warp7.frc2022.lib.NetworkUtil;
 import ca.warp7.frc2022.lib.control.PID;
-import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean

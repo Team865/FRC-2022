@@ -9,7 +9,7 @@ package ca.warp7.frc2022.commands;
 
 import ca.warp7.frc2022.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpiutil.math.MathUtil;
+import edu.wpi.first.math.MathUtil;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;

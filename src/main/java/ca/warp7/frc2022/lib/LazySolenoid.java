@@ -11,7 +11,7 @@ public class LazySolenoid {
         enabled = false;
         this.enabled = enabled;
         if (enabled) {
-            this.solenoid = new Solenoid(channel);
+            //this.solenoid = new Solenoid(channel);
         } else {
             // don't want to create it at all, since the compressor would
             // start when any solenoids are instantiated
