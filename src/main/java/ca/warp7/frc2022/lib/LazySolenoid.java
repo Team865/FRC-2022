@@ -1,6 +1,7 @@
 package ca.warp7.frc2022.lib;
 
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
 public class LazySolenoid {
     private Solenoid solenoid;
@@ -8,10 +9,10 @@ public class LazySolenoid {
     private boolean on = false;
 
     public LazySolenoid(int channel, boolean enabled) {
-        enabled = false;
+        //enabled = true;
         this.enabled = enabled;
         if (enabled) {
-            //this.solenoid = new Solenoid(channel);
+            this.solenoid = new Solenoid(PneumaticsModuleType.CTREPCM, channel);
         } else {
             // don't want to create it at all, since the compressor would
             // start when any solenoids are instantiated

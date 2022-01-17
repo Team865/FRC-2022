@@ -23,7 +23,8 @@ public final class Constants {
 
     // Configuration
 
-    public static final boolean kEnableSolenoids = false;
+    public static final boolean kEnableSolenoids = true;
+
     public static final boolean kDebugCommandScheduler = false;
     public static final boolean kUseKinematicsDrive = false;
     public static final boolean kUseNotifierForMainLoop = false;
@@ -40,7 +41,7 @@ public final class Constants {
 
 
     // PCM IDs
-    public static final int kDriveShifterID = 4;
+    public static final int kDriveShifterID = 0;
 
     // DIO IDs
 
