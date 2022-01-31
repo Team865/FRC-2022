@@ -10,6 +10,8 @@ package ca.warp7.frc2022.subsystems;
 import ca.warp7.frc2022.lib.LazySolenoid;
 import ca.warp7.frc2022.lib.control.PID;
 import ca.warp7.frc2022.subsystems.drivetrain.DriveTrainVariant;
+import ca.warp7.frc2022.subsystems.drivetrain.LazyDriveTrainVariant;
+
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Timer;
@@ -39,7 +41,12 @@ public final class DriveTrain implements Subsystem {
         if (driveTrainVariant != null) {
             throw new IllegalStateException("Cannot set drive train variant");
         }
-        driveTrainVariant = variant;
+        if (kEnableDriveTrain){
+            driveTrainVariant = variant;
+        }
+        else{
+            driveTrainVariant = new LazyDriveTrainVariant();
+        }
     }
 
     private final LazySolenoid shifterSolenoid =
