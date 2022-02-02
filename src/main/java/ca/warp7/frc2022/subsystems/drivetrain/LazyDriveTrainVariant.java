@@ -6,6 +6,8 @@ import ca.warp7.frc2022.lib.control.PID;
 /*
     This class is suppose to be a substitute for an instance of DriveTrainVariant. To the rest of the program,
     its a valid DriveTrainVariant, however it does not actually do anything.
+
+    THIS CLASS IS NOT USED WHEN THE DRIVE TRAIN IS ENABLED, NONE OF THE METHODS DO ANYTHING OF USE.
 */
 public final class LazyDriveTrainVariant implements DriveTrainVariant {
     public LazyDriveTrainVariant() {

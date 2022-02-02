@@ -41,8 +41,6 @@ public final class Robot extends TimedRobot {
     public void robotInit() {
         System.out.println("Hello me is robit!");
 
-        DriveTrain.setVariant(new FalconDriveTrainVariant());
-
         scheduler = CommandScheduler.getInstance();
 
         if (Constants.kDebugCommandScheduler) {
