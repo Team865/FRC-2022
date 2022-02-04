@@ -53,7 +53,11 @@ public final class Robot extends TimedRobot {
         scheduler.registerSubsystem(
                 DriveTrain.getInstance(),
                 Infrastructure.getInstance(),
-                Limelight.getInstance()
+                Limelight.getInstance(),
+                Launcher.getInstance(),
+                Intake.getInstance(),
+                Elevator.getInstance(),
+                Climber.getInstance()
         );
 
         // Create commands
