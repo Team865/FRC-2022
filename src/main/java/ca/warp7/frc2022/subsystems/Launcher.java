@@ -15,7 +15,7 @@ public class Launcher implements Subsystem {
     }
 
     private Launcher(){
-        if(kIsShooterLobber){
+        if(kIsLauncherLobber){
             targetRPS = kLobberRPS;
         }
         else{
@@ -49,8 +49,8 @@ public class Launcher implements Subsystem {
         if (targetRPS == 0.0)
             this.setVoltage(0.0);
         else
-            this.setVoltage((targetRPS + getError() * kFlywheelKp) * kFlywheelKv +
-                    kFlywheelKs * Math.signum(targetRPS));
+            this.setVoltage((targetRPS + getError() * kLauncherKp) * kLauncherKv +
+                    kLauncherKs * Math.signum(targetRPS));
     }
 
     private void setVoltage(double voltage) {

@@ -48,6 +48,18 @@ public final class Constants {
 
     //public static final int kBeamBreakID = 1;
 
+    // Launcher Tuning
+    public static final boolean kIsLauncherLobber = true;
+
+    public static final double kLobberRPS = 10.0;
+    public static final double kShooterRPS = 20.0;
+
+    // TODO: Figure out what these variables actually mean (I ported them from 2020 code)
+    public static final double kLauncherKp = 1.94;
+    public static final double kLauncherKs = 0.0911;
+    public static final double kLauncherKv = (0.0644 + 0.063) / 2;
+    public static final double kLauncherKa = (0.0401 + 0.0483) / 2;
+
     // Drive Train Tuning
 
     public static final double kLowGearRampRate = 0.15;
