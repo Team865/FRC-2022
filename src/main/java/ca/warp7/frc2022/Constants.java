@@ -25,6 +25,7 @@ public final class Constants {
 
     public static final boolean kEnableSolenoids = true;
     public static final boolean kEnableDriveTrain = true;
+    public static final boolean kEnableLauncher = true;
 
     public static final boolean kDebugCommandScheduler = false;
     public static final boolean kUseKinematicsDrive = false;

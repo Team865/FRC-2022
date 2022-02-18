@@ -1,16 +1,20 @@
 package ca.warp7.frc2022.subsystems;
 
-import edu.wpi.first.wpilibj2.command.Subsystem;
 import static ca.warp7.frc2022.Constants.*;
 import ca.warp7.frc2022.lib.Util;
 
-public class Launcher implements Subsystem {
-    private static Launcher instance;
+public class Launcher  implements LauncherInterface{
+    private static LauncherInterface instance;
     private final double targetRPS;
     private double currentRPS;
 
-    public static Launcher getInstance() {
-        if (instance == null) instance = new Launcher();
+    public static LauncherInterface getInstance() {
+        if(kEnableLauncher){
+            if (instance == null) instance = new Launcher();
+        }
+        else{
+            instance = LazyLauncher.getInstance();
+        } 
         return instance;
     }
 
@@ -30,10 +34,12 @@ public class Launcher implements Subsystem {
     }
 
     //Bad temp documentation note: Epsilon is the allowed decemal error since doubles and floats subtract weird.
+    @Override
     public boolean isTargetReached(double epsilon) {
         return Util.epsilonEquals(getPercentError(), 0.0, epsilon);
     }
 
+    @Override
     public double getPercentError() {
         if (targetRPS != 0.0)
             return getError() / targetRPS;
@@ -41,10 +47,12 @@ public class Launcher implements Subsystem {
             return 0.0;
     }
 
+    @Override
     public double getError() {
         return targetRPS - currentRPS;
     }
 
+    @Override
     public void calcOutput() {
         if (targetRPS == 0.0)
             this.setVoltage(0.0);
