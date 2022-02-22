@@ -38,6 +38,8 @@ public final class Constants {
     public static final int kDriveRightMasterID = 34;
     public static final int kDriveRightFollowerID = 33;
 
+    public static final int kClimbMasterID = 41;
+    public static final int kClimbFollowerID = 42;
     //public static final int kControlPanelManipulatorID = -1;
 
 
