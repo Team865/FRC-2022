@@ -40,6 +40,9 @@ public final class Constants {
 
     public static final int kClimbMasterID = 41;
     public static final int kClimbFollowerID = 42;
+
+    public static final int kElevatorID = 51;
+
     //public static final int kControlPanelManipulatorID = -1;
 
 
@@ -48,7 +51,14 @@ public final class Constants {
 
     // DIO IDs
 
-    //public static final int kBeamBreakID = 1;
+    public static final int kBeamBreakLowID = 1;
+    public static final int kBeamBreakHighID = 2;
+
+    // Elevator Tuning
+    public static final double kElevatorSpeed = 0.05;
+
+    // Intake Tuning
+    public static final double kIntakeSpeed = 0.05;
 
     // Launcher Tuning
     public static final boolean kIsLauncherLobber = true;
