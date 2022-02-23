@@ -29,6 +29,8 @@ public class TeleopCommand extends CommandBase {
 
     private Command visionAlignCommand = new VisionAlignCommand(this::getVisionAlignSpeed);
 
+    private Command climbCommand = new ClimberSpeedCommand(this::getClimbSpeed);
+
     //    private Command controlPanelDisplay = new ControlPanelCommand(this::getControlPanelSpinnerSpeed);
 
     private Command resetRobotStateCommand = new RobotStateCommand();
@@ -102,6 +104,8 @@ public class TeleopCommand extends CommandBase {
         setLowGearDriveCommand.schedule();
         curvatureDriveCommand.schedule();
         brakeCommand.schedule();
+
+        climbCommand.schedule();
     }
 
     @Override
