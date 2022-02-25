@@ -18,8 +18,8 @@ public class DisabledCommand extends CommandBase {
     @Override
     public void initialize() {
         driveTrain.setCoast();
-        SmartDashboard.putNumber("rps", 0.0);
-        SmartDashboard.putNumber("target", 0.0);
+        // SmartDashboard.putNumber("rps", 0.0);
+        // SmartDashboard.putNumber("target", 0.0);
     }
 
     @Override
