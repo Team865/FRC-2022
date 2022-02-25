@@ -35,19 +35,21 @@ public final class Constants {
     public static final int kDriveLeftMasterID = 31;
     public static final int kDriveLeftFollowerID = 32;
 
-    public static final int kDriveRightMasterID = 34;
-    public static final int kDriveRightFollowerID = 33;
+    public static final int kDriveRightMasterID = 21;
+    public static final int kDriveRightFollowerID = 22;
 
     public static final int kClimbMasterID = 41;
     public static final int kClimbFollowerID = 42;
 
     public static final int kElevatorID = 51;
 
+    public static final int kIntakeID = 61; 
+
     //public static final int kControlPanelManipulatorID = -1;
 
-
-    // PCM IDs
+    // PH ID
     public static final int kDriveShifterID = 0;
+    public static final int kIntakePistonID = 1;
 
     // DIO IDs
 

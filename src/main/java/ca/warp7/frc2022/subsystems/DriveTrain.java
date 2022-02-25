@@ -67,9 +67,9 @@ public final class DriveTrain implements Subsystem {
     public void periodic() {
         updateRobotStateEstimation();
 
-        SmartDashboard.putNumber("Robot X (m)", robotState.getTranslation().getX());
-        SmartDashboard.putNumber("Robot Y (m)", robotState.getTranslation().getY());
-        SmartDashboard.putNumber("Robot Angle (deg)", robotState.getRotation().getDegrees());
+        // SmartDashboard.putNumber("Robot X (m)", robotState.getTranslation().getX());
+        // SmartDashboard.putNumber("Robot Y (m)", robotState.getTranslation().getY());
+        // SmartDashboard.putNumber("Robot Angle (deg)", robotState.getRotation().getDegrees());
     }
 
     /**

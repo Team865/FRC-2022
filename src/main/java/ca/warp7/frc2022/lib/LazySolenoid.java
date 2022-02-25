@@ -9,10 +9,9 @@ public class LazySolenoid {
     private boolean on = false;
 
     public LazySolenoid(int channel, boolean enabled) {
-        //enabled = true;
         this.enabled = enabled;
         if (enabled) {
-            this.solenoid = new Solenoid(PneumaticsModuleType.CTREPCM, channel);
+            this.solenoid = new Solenoid(12, PneumaticsModuleType.REVPH, channel);
         } else {
             // don't want to create it at all, since the compressor would
             // start when any solenoids are instantiated
