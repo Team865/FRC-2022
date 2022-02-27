@@ -2,11 +2,20 @@ package ca.warp7.frc2022.subsystems;
 
 import static ca.warp7.frc2022.Constants.*;
 import ca.warp7.frc2022.lib.Util;
+import ca.warp7.frc2022.lib.control.PIDController;
+import ca.warp7.frc2022.lib.control.PID;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.*;
+import ca.warp7.frc2022.lib.motor.MotorControlHelper;
 
 public class Launcher  implements LauncherInterface{
     private static LauncherInterface instance;
     private final double targetRPS;
     private double currentRPS;
+    private PIDController voltageCalculator;
+    private static TalonFX launcherMotorMaster;
+    private static TalonFX launcherMotorFollower;
+
 
     public static LauncherInterface getInstance() {
         if(kEnableLauncher){
@@ -19,6 +28,11 @@ public class Launcher  implements LauncherInterface{
     }
 
     private Launcher(){
+        voltageCalculator = new PIDController(new PID(kLauncherP, kLauncherI, kLauncherD, kLauncherF));
+
+        launcherMotorMaster = MotorControlHelper.createMasterTalonFX(kLauncherMasterID);
+        launcherMotorFollower = MotorControlHelper.assignFollowerTalonFX(launcherMotorMaster, kLauncherFollowerID, InvertType.FollowMaster);
+
         if(kIsLauncherLobber){
             targetRPS = kLobberRPS;
         }
@@ -30,7 +44,8 @@ public class Launcher  implements LauncherInterface{
 
     @Override
     public void periodic() {
-        // currentRPS = flywheelMasterNeo.getEncoder().getVelocity() / kFlywheelGearRatio / 60;
+        //Returns in ms
+        currentRPS = launcherMotorMaster.getSelectedSensorVelocity() / 60;
     }
 
     //Bad temp documentation note: Epsilon is the allowed decemal error since doubles and floats subtract weird.
@@ -57,11 +72,10 @@ public class Launcher  implements LauncherInterface{
         if (targetRPS == 0.0)
             this.setVoltage(0.0);
         else
-            this.setVoltage((targetRPS + getError() * kLauncherKp) * kLauncherKv +
-                    kLauncherKs * Math.signum(targetRPS));
+            this.setVoltage(voltageCalculator.calculate(this.getError()));
     }
 
     private void setVoltage(double voltage) {
-        //flywheelMasterNeo.set(voltage / 12);
+        launcherMotorMaster.set(ControlMode.Position, voltage / 12);
     }
 }
