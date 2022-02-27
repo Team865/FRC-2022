@@ -77,7 +77,7 @@ public final class Constants {
     public static final double kLauncherI = 0.0;
     public static final double kLauncherD = 0.0;
     // This one kinda works like a RPS to voltage ratio.
-    public static final double kLauncherF = 1.0;
+    public static final double kLauncherF = 0.1;
 
     // Drive Train Tuning
 

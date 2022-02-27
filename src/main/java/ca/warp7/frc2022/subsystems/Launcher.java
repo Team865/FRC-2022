@@ -7,6 +7,7 @@ import ca.warp7.frc2022.lib.control.PID;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.*;
 import ca.warp7.frc2022.lib.motor.MotorControlHelper;
+import edu.wpi.first.math.MathUtil;
 
 public class Launcher  implements LauncherInterface{
     private static LauncherInterface instance;
@@ -31,7 +32,7 @@ public class Launcher  implements LauncherInterface{
         voltageCalculator = new PIDController(new PID(kLauncherP, kLauncherI, kLauncherD, kLauncherF));
 
         launcherMotorMaster = MotorControlHelper.createMasterTalonFX(kLauncherMasterID);
-        launcherMotorFollower = MotorControlHelper.assignFollowerTalonFX(launcherMotorMaster, kLauncherFollowerID, InvertType.FollowMaster);
+        launcherMotorFollower = MotorControlHelper.assignFollowerTalonFX(launcherMotorMaster, kLauncherFollowerID, InvertType.OpposeMaster);
 
         if(kIsLauncherLobber){
             targetRPS = kLobberRPS;
@@ -69,13 +70,15 @@ public class Launcher  implements LauncherInterface{
 
     @Override
     public void calcOutput() {
-        if (targetRPS == 0.0)
-            this.setVoltage(0.0);
-        else
-            this.setVoltage(voltageCalculator.calculate(this.getError()));
+        double outputVolts = 0.0;
+        if (targetRPS != 0.0){
+            voltageCalculator.calculate(targetRPS, currentRPS);
+        }
+        outputVolts = MathUtil.clamp(outputVolts, 0.0, 1.0);
+        this.setVoltage(outputVolts);
     }
 
     private void setVoltage(double voltage) {
-        launcherMotorMaster.set(ControlMode.Position, voltage / 12);
+        launcherMotorMaster.set(ControlMode.PercentOutput, voltage);
     }
 }
