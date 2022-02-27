@@ -36,18 +36,32 @@ public final class Constants {
     public static final int kDriveLeftMasterID = 31;
     public static final int kDriveLeftFollowerID = 32;
 
-    public static final int kDriveRightMasterID = 34;
-    public static final int kDriveRightFollowerID = 33;
+    public static final int kDriveRightMasterID = 21;
+    public static final int kDriveRightFollowerID = 22;
+
+    public static final int kClimbMasterID = 41;
+    public static final int kClimbFollowerID = 42;
+
+    public static final int kElevatorID = 51;
+
+    public static final int kIntakeID = 61; 
 
     //public static final int kControlPanelManipulatorID = -1;
 
-
-    // PCM IDs
+    // PH ID
     public static final int kDriveShifterID = 0;
+    public static final int kIntakePistonID = 1;
 
     // DIO IDs
 
-    //public static final int kBeamBreakID = 1;
+    public static final int kBeamBreakLowID = 1;
+    public static final int kBeamBreakHighID = 2;
+
+    // Elevator Tuning
+    public static final double kElevatorSpeed = 0.05;
+
+    // Intake Tuning
+    public static final double kIntakeSpeed = 0.05;
 
     // Launcher Tuning
     public static final boolean kIsLauncherLobber = true;

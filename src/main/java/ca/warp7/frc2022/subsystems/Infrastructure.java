@@ -14,16 +14,16 @@ public class Infrastructure implements Subsystem {
         return instance;
     }
 
-//    private Compressor compressor = new Compressor(PneumaticsModuleType.CTREPCM);
+    private Compressor compressor = new Compressor(12, PneumaticsModuleType.REVPH);
 
     private Infrastructure() {
     }
 
     public void startCompressor() {
-        //compressor.enableDigital();
+        compressor.enableDigital();
     }
 
     public void stopCompressor() {
-        //compressor.disable();
+        compressor.disable();
     }
 }

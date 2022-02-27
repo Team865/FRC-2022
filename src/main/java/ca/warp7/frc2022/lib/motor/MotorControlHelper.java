@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 
@@ -45,6 +46,21 @@ public class MotorControlHelper {
     }
 
     /**
+     * Create a master TalonSRX motor controller
+     *
+     * @param deviceID the CAN id (shown on Phoenix Tuner)
+     * @return the motor controller object with default settings
+     */ 
+    public static TalonSRX createMasterTalonSRX(int deviceID) {
+        TalonSRX master = new TalonSRX(deviceID);
+        master.configFactoryDefault();
+        master.setNeutralMode(NeutralMode.Brake);
+        master.configVoltageCompSaturation(12.0);
+        master.enableVoltageCompensation(true);
+        return master;
+    }
+
+    /**
      * Create a master Spark MAX motor controller
      *
      * @param deviceID the CAN id (shown on Phoenix Tuner)
@@ -75,6 +91,27 @@ public class MotorControlHelper {
         follower.configFactoryDefault();
         follower.setNeutralMode(NeutralMode.Brake);
         follower.setInverted(invertType);
+        follower.follow(master);
+        return follower;
+    }
+
+    /**
+     * Create a follower TalonSRX
+     *
+     * @param master        the master motor controller to follow
+     * @param deviceID      the CAN id
+     * @param b    the invert type
+     * @return              the follower TalonSRX object
+     */
+    public static TalonSRX assignFollowerTalonSRX(
+        BaseMotorController master,
+        int deviceID,
+        boolean b
+    ) {
+        TalonSRX follower = new TalonSRX(deviceID);
+        follower.configFactoryDefault();
+        follower.setNeutralMode(NeutralMode.Brake);
+        follower.setInverted(b);
         follower.follow(master);
         return follower;
     }

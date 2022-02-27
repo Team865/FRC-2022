@@ -29,6 +29,11 @@ public class TeleopCommand extends CommandBase {
 
     private Command visionAlignCommand = new VisionAlignCommand(this::getVisionAlignSpeed);
 
+
+    private Command intakeCommand = new IntakingCommand(this::getIntakeSpeed);
+    private Command feedCommand = new FeedCommand(this::getFeedSpeed);
+    private Command climbCommand = new ClimberSpeedCommand(this::getClimbSpeed);
+
     //    private Command controlPanelDisplay = new ControlPanelCommand(this::getControlPanelSpinnerSpeed);
 
     private Command resetRobotStateCommand = new RobotStateCommand();
@@ -54,7 +59,7 @@ public class TeleopCommand extends CommandBase {
 //    }
 
     public double getIntakeSpeed() {
-        SmartDashboard.putBoolean("Intake isReversed", isReversed);
+        // SmartDashboard.putBoolean("Intake isReversed", isReversed);
         if (isIntaking)
             return Util.applyDeadband(driver.leftTrigger, 0.2) * (isReversed ? -1 : 1);
         return 0.0;
@@ -102,6 +107,10 @@ public class TeleopCommand extends CommandBase {
         setLowGearDriveCommand.schedule();
         curvatureDriveCommand.schedule();
         brakeCommand.schedule();
+
+        feedCommand.schedule();
+        climbCommand.schedule();
+        intakeCommand.schedule();
     }
 
     @Override
