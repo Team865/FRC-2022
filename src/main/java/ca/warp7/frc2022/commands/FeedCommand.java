@@ -8,11 +8,12 @@ import java.util.function.DoubleSupplier;
 import ca.warp7.frc2022.subsystems.Elevator;
 import ca.warp7.frc2022.subsystems.Intake;
 import ca.warp7.frc2022.subsystems.Launcher;
+import ca.warp7.frc2022.subsystems.LauncherInterface;
 
 public class FeedCommand  extends CommandBase{
     private Intake intake = Intake.getInstance();
     private Elevator elevator = Elevator.getInstance();
-    private Launcher launcher = Launcher.getInstance();
+    private LauncherInterface launcher = Launcher.getInstance();
 
     private DoubleSupplier speedSupplier;
 
