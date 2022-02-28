@@ -6,9 +6,7 @@ public interface LauncherInterface extends Subsystem {
     //Bad temp documentation note: Epsilon is the allowed decemal error since doubles and floats subtract weird.
     public boolean isTargetReached(double epsilon);
 
-    public double getPercentError();
+    public void setRunLauncher(boolean newRunLauncher);
 
-    public double getError();
-
-    public void calcOutput();
+    public double getPercentPower();
 }

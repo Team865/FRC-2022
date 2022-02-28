@@ -44,7 +44,11 @@ public final class Constants {
 
     public static final int kElevatorID = 51;
 
-    public static final int kIntakeID = 61; 
+    public static final int kIntakeID = 61;
+
+    //Swapped these so they go in the right dirrection compared to on the phenox tuner
+    public static final int kLauncherFollowerID = 55;
+    public static final int kLauncherMasterID = 56;
 
     //public static final int kControlPanelManipulatorID = -1;
 
@@ -69,11 +73,16 @@ public final class Constants {
     public static final double kLobberRPS = 10.0;
     public static final double kShooterRPS = 20.0;
 
-    // TODO: Figure out what these variables actually mean (I ported them from 2020 code)
-    public static final double kLauncherKp = 1.94;
-    public static final double kLauncherKs = 0.0911;
-    public static final double kLauncherKv = (0.0644 + 0.063) / 2;
-    public static final double kLauncherKa = (0.0401 + 0.0483) / 2;
+    public static final double kLauncherTicksPerRotation = 2048.0;
+    public static final double kLauncherVelocityFrequency = 0.1;
+    public static final double kLauncherGearRatio = 16.0/36.0;
+
+    // Tuning for the launcher's PID
+    public static final double kLauncherP = 0.0;
+    public static final double kLauncherI = 0.0;
+    public static final double kLauncherD = 0.0;
+    // This one kinda works like a RPS to voltage ratio.
+    public static final double kLauncherF = 0.1;
 
     // Drive Train Tuning
 
