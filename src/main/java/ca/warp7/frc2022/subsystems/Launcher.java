@@ -45,8 +45,9 @@ public class Launcher  implements LauncherInterface{
 
     @Override
     public void periodic() {
-        //Returns in ms
-        currentRPS = launcherMotorMaster.getSelectedSensorVelocity() / 60;
+        //Note: .getSelectedSensorVelocity returns in ticks per miliseconds.
+        currentRPS = launcherMotorMaster.getSelectedSensorVelocity() 
+            / kLauncherTicksPerRotation / kLauncherVelocityFrequency / kLauncherGearRatio;
     }
 
     //Bad temp documentation note: Epsilon is the allowed decemal error since doubles and floats subtract weird.

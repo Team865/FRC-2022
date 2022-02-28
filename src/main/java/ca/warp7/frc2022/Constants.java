@@ -72,6 +72,10 @@ public final class Constants {
     public static final double kLobberRPS = 10.0;
     public static final double kShooterRPS = 20.0;
 
+    public static final double kLauncherTicksPerRotation = 2048;
+    public static final double kLauncherVelocityFrequency = 0.1;
+    public static final double kLauncherGearRatio = 16/36;
+
     // Tuning for the launcher's PID
     public static final double kLauncherP = 0.0;
     public static final double kLauncherI = 0.0;

@@ -18,7 +18,7 @@ public class LazyLauncher implements LauncherInterface {
     
     @Override
     public boolean isTargetReached(double epsilon) {
-        return(false);
+        return(true);
     }
 
     @Override
