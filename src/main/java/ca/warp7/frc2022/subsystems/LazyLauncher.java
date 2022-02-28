@@ -22,16 +22,11 @@ public class LazyLauncher implements LauncherInterface {
     }
 
     @Override
-    public double getPercentError() {
-        return(0.0);
+    public void setRunLauncher(boolean newRunLauncher) {
     }
 
     @Override
-    public double getError() {
+    public double getPercentPower(){
         return (0.0);
-    }
-
-    @Override
-    public void calcOutput() {
     }
 }

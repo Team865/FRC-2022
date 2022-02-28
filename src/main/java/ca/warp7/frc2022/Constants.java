@@ -46,8 +46,9 @@ public final class Constants {
 
     public static final int kIntakeID = 61;
 
-    public static final int kLauncherFollowerID = 56;
-    public static final int kLauncherMasterID = 55;
+    //Swapped these so they go in the right dirrection compared to on the phenox tuner
+    public static final int kLauncherFollowerID = 55;
+    public static final int kLauncherMasterID = 56;
 
     //public static final int kControlPanelManipulatorID = -1;
 
@@ -72,9 +73,9 @@ public final class Constants {
     public static final double kLobberRPS = 10.0;
     public static final double kShooterRPS = 20.0;
 
-    public static final double kLauncherTicksPerRotation = 2048;
+    public static final double kLauncherTicksPerRotation = 2048.0;
     public static final double kLauncherVelocityFrequency = 0.1;
-    public static final double kLauncherGearRatio = 16/36;
+    public static final double kLauncherGearRatio = 16.0/36.0;
 
     // Tuning for the launcher's PID
     public static final double kLauncherP = 0.0;

@@ -11,9 +11,12 @@ import edu.wpi.first.math.MathUtil;
 
 public class Launcher  implements LauncherInterface{
     private static LauncherInterface instance;
-    private final double targetRPS;
+    private final double fullSpeedRPS;
+    private double targetRPS;
     private double currentRPS;
     private PIDController voltageCalculator;
+    private boolean runLauncher;
+    private double outputVoltPercent;
     private static TalonFX launcherMotorMaster;
     private static TalonFX launcherMotorFollower;
 
@@ -31,15 +34,18 @@ public class Launcher  implements LauncherInterface{
     private Launcher(){
         voltageCalculator = new PIDController(new PID(kLauncherP, kLauncherI, kLauncherD, kLauncherF));
 
+        runLauncher = true;
+
         launcherMotorMaster = MotorControlHelper.createMasterTalonFX(kLauncherMasterID);
         launcherMotorFollower = MotorControlHelper.assignFollowerTalonFX(launcherMotorMaster, kLauncherFollowerID, InvertType.OpposeMaster);
 
         if(kIsLauncherLobber){
-            targetRPS = kLobberRPS;
+            fullSpeedRPS = kLobberRPS;
         }
         else{
-            targetRPS = kShooterRPS;
+            fullSpeedRPS = kShooterRPS;
         }
+        targetRPS = 0.0;
         currentRPS = 0.0;
     }
 
@@ -48,6 +54,9 @@ public class Launcher  implements LauncherInterface{
         //Note: .getSelectedSensorVelocity returns in ticks per miliseconds.
         currentRPS = launcherMotorMaster.getSelectedSensorVelocity() 
             / kLauncherTicksPerRotation / kLauncherVelocityFrequency / kLauncherGearRatio;
+        this.updateTargetRPS();
+        this.updateVoltage();
+        System.out.println("test");
     }
 
     //Bad temp documentation note: Epsilon is the allowed decemal error since doubles and floats subtract weird.
@@ -57,26 +66,37 @@ public class Launcher  implements LauncherInterface{
     }
 
     @Override
-    public double getPercentError() {
+    public void setRunLauncher(boolean newRunLauncher) {
+        runLauncher = newRunLauncher;
+    }
+
+    @Override
+    public double getPercentPower(){
+        return (outputVoltPercent);
+    }
+
+    private void updateTargetRPS(){
+        targetRPS = runLauncher ? fullSpeedRPS : 0.0;
+    }
+
+    private double getPercentError() {
         if (targetRPS != 0.0)
             return getError() / targetRPS;
         else
             return 0.0;
     }
 
-    @Override
-    public double getError() {
+    private double getError() {
         return targetRPS - currentRPS;
     }
 
-    @Override
-    public void calcOutput() {
-        double outputVolts = 0.0;
+    private void updateVoltage() {
+        outputVoltPercent = 0.0;
         if (targetRPS != 0.0){
-            voltageCalculator.calculate(targetRPS, currentRPS);
+            outputVoltPercent = voltageCalculator.calculate(targetRPS, currentRPS);
         }
-        outputVolts = MathUtil.clamp(outputVolts, 0.0, 1.0);
-        this.setVoltage(outputVolts);
+        outputVoltPercent = MathUtil.clamp(outputVoltPercent, 0.0, 0.1);
+        this.setVoltage(outputVoltPercent);
     }
 
     private void setVoltage(double voltage) {
