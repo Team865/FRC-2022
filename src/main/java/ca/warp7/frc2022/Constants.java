@@ -78,8 +78,8 @@ public final class Constants {
     public static final double kLauncherGearRatio = 16.0/36.0;
 
     // Tuning for the launcher's PID
-    public static final double kLauncherP = 0.0;
-    public static final double kLauncherI = 0.0;
+    public static final double kLauncherP = 1.0;
+    public static final double kLauncherI = 1.0;
     public static final double kLauncherD = 0.0;
     // This one kinda works like a RPS to voltage ratio.
     public static final double kLauncherF = 0.1;

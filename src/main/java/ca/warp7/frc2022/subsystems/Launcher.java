@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.*;
 import ca.warp7.frc2022.lib.motor.MotorControlHelper;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Launcher  implements LauncherInterface{
     private static LauncherInterface instance;
@@ -56,7 +57,13 @@ public class Launcher  implements LauncherInterface{
             / kLauncherTicksPerRotation / kLauncherVelocityFrequency / kLauncherGearRatio;
         this.updateTargetRPS();
         this.updateVoltage();
-        System.out.println("test");
+        
+        SmartDashboard.putNumber("Current voltage percent", outputVoltPercent * 100);
+        SmartDashboard.putNumber("Current RPS dif", this.getError());
+        SmartDashboard.putNumber("Target RPS", targetRPS);
+        SmartDashboard.putNumber("Current RPS", currentRPS);
+        SmartDashboard.putBoolean("Is launcher running", runLauncher);
+        SmartDashboard.putBoolean("Is RPS target reached", this.isTargetReached(0.001));
     }
 
     //Bad temp documentation note: Epsilon is the allowed decemal error since doubles and floats subtract weird.
@@ -95,6 +102,9 @@ public class Launcher  implements LauncherInterface{
         if (targetRPS != 0.0){
             outputVoltPercent = voltageCalculator.calculate(targetRPS, currentRPS);
         }
+        SmartDashboard.putNumber("Target RPS", targetRPS);
+        SmartDashboard.putNumber("Current RPT", currentRPS);
+        SmartDashboard.putNumber("Raw PID Value", outputVoltPercent);
         outputVoltPercent = MathUtil.clamp(outputVoltPercent, 0.0, 0.1);
         this.setVoltage(outputVoltPercent);
     }
