@@ -54,7 +54,7 @@ public class Launcher  implements LauncherInterface{
     public void periodic() {
         //Note: .getSelectedSensorVelocity returns in ticks per miliseconds.
         currentRPS = launcherMotorMaster.getSelectedSensorVelocity() 
-            / kLauncherTicksPerRotation / kLauncherVelocityFrequency / kLauncherGearRatio;
+            / kLauncherTicksPerRotation / kLauncherVelocityFrequency * kLauncherGearRatio;
         this.updateTargetRPS();
         this.updateVoltage();
         
@@ -63,7 +63,7 @@ public class Launcher  implements LauncherInterface{
         SmartDashboard.putNumber("Target RPS", targetRPS);
         SmartDashboard.putNumber("Current RPS", currentRPS);
         SmartDashboard.putBoolean("Is launcher running", runLauncher);
-        SmartDashboard.putBoolean("Is RPS target reached", this.isTargetReached(0.001));
+        SmartDashboard.putBoolean("Is RPS target reached", this.isTargetReached(0.1));
     }
 
     //Bad temp documentation note: Epsilon is the allowed decemal error since doubles and floats subtract weird.
@@ -105,7 +105,7 @@ public class Launcher  implements LauncherInterface{
         SmartDashboard.putNumber("Target RPS", targetRPS);
         SmartDashboard.putNumber("Current RPT", currentRPS);
         SmartDashboard.putNumber("Raw PID Value", outputVoltPercent);
-        outputVoltPercent = MathUtil.clamp(outputVoltPercent, 0.0, 0.1);
+        outputVoltPercent = MathUtil.clamp(outputVoltPercent, 0.0, 1.0);
         this.setVoltage(outputVoltPercent);
     }
 

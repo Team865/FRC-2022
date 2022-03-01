@@ -70,7 +70,8 @@ public final class Constants {
     // Launcher Tuning
     public static final boolean kIsLauncherLobber = true;
 
-    public static final double kLobberRPS = 10.0;
+    // kLobber controls shooter speed
+    public static final double kLobberRPS = 14.0;
     public static final double kShooterRPS = 20.0;
 
     public static final double kLauncherTicksPerRotation = 2048.0;
@@ -78,11 +79,11 @@ public final class Constants {
     public static final double kLauncherGearRatio = 16.0/36.0;
 
     // Tuning for the launcher's PID
-    public static final double kLauncherP = 1.0;
-    public static final double kLauncherI = 1.0;
+    public static final double kLauncherP = 0.001;
+    public static final double kLauncherI = 0.005;
     public static final double kLauncherD = 0.0;
     // This one kinda works like a RPS to voltage ratio.
-    public static final double kLauncherF = 0.1;
+    public static final double kLauncherF = 0.022;
 
     // Drive Train Tuning
 
