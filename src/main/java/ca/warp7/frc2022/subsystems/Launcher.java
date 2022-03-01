@@ -63,13 +63,13 @@ public class Launcher  implements LauncherInterface{
         SmartDashboard.putNumber("Target RPS", targetRPS);
         SmartDashboard.putNumber("Current RPS", currentRPS);
         SmartDashboard.putBoolean("Is launcher running", runLauncher);
-        SmartDashboard.putBoolean("Is RPS target reached", this.isTargetReached(0.1));
+        SmartDashboard.putBoolean("Is RPS target reached", this.isTargetReached());
     }
 
     //Bad temp documentation note: Epsilon is the allowed decemal error since doubles and floats subtract weird.
     @Override
-    public boolean isTargetReached(double epsilon) {
-        return Util.epsilonEquals(getPercentError(), 0.0, epsilon);
+    public boolean isTargetReached() {
+        return Util.epsilonEquals(getPercentError(), 0.0, 0.001);
     }
 
     @Override

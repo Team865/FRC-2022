@@ -27,7 +27,7 @@ public class AutoFeedCommand extends CommandBase {
         boolean highBeamBreak = Elevator.getHighBeamBreak();
         boolean isShooting = shootingSupplier.getAsBoolean();
 
-        if ((isShooting && launcher.isTargetReached(0.015)) || (lowBeamBreak && !highBeamBreak)) {
+        if ((isShooting && launcher.isTargetReached()) || (lowBeamBreak && !highBeamBreak)) {
             elevator.setSpeed(kElevatorSpeed);
             // intake.setSpeed(kIntakeSpeed);
         } else {
