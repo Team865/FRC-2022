@@ -19,7 +19,7 @@ public class FeedCommand  extends CommandBase{
 
     public FeedCommand(DoubleSupplier speedSupplier) {
         this.speedSupplier = speedSupplier;
-        addRequirements(elevator, intake);
+        addRequirements(elevator);
     }
 
     @Override
@@ -28,14 +28,8 @@ public class FeedCommand  extends CommandBase{
         boolean highBeamBreak = Elevator.getHighBeamBreak();
         double feedSpeed = speedSupplier.getAsDouble();
 
-        if (feedSpeed < 0) {
+        if (feedSpeed != 0) {
             elevator.setSpeed(feedSpeed);
-            // intake.setSpeed(feedSpeed);
-        } else if ((feedSpeed > 0 && launcher.isTargetReached(0.015)) || (lowBeamBreak && !highBeamBreak)){
-            elevator.setSpeed(kElevatorSpeed);
-            // intake.setSpeed(kIntakeSpeed);
-        } else {
-            elevator.setSpeed(0.0);
         }
         
     }

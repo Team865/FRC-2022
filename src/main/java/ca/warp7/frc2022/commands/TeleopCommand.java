@@ -53,6 +53,7 @@ public class TeleopCommand extends CommandBase {
     private double closeShotAdjustment = 0.0;
     private boolean isClose = false;
     private boolean isPriming = false;
+    private boolean isFeeding = false;
 
 //    public double getControlPanelSpinnerSpeed() {
 //        return operator.rightX;
@@ -66,7 +67,7 @@ public class TeleopCommand extends CommandBase {
     }
 
     private double getXSpeed() {
-        return Util.applyDeadband(driver.leftY, 0.2);
+        return Util.applyDeadband(driver.leftY / -1, 0.2);
     }
 
     private double getZRotation() {
@@ -88,7 +89,9 @@ public class TeleopCommand extends CommandBase {
     }
 
     private double getFeedSpeed() {
-        return 0.7 * Util.applyDeadband(driver.rightTrigger, 0.3) * (isReversed ? -1 : 1);
+        if (isFeeding)
+            return Util.applyDeadband(driver.rightTrigger, 0.2) * (isReversed ? -1 : 1);
+        return 0.0;
     }
 
 
@@ -129,6 +132,12 @@ public class TeleopCommand extends CommandBase {
             isIntaking = driver.leftTrigger > 0.22;
         } else {
             isIntaking = driver.leftTrigger > 0.2;
+        }
+
+        if (!isFeeding) {
+            isFeeding = driver.leftTrigger > 0.22;
+        } else {
+            isFeeding = driver.leftTrigger > 0.2;
         }
 
         if (driver.yButton.isPressed()) {
