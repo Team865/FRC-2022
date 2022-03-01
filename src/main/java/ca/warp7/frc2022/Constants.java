@@ -62,7 +62,7 @@ public final class Constants {
     public static final int kBeamBreakHighID = 2;
 
     // Elevator Tuning
-    public static final double kElevatorSpeed = 0.05;
+    public static final double kElevatorSpeed = 0.20;
 
     // Intake Tuning
     public static final double kIntakeSpeed = 0.05;
@@ -71,7 +71,7 @@ public final class Constants {
     public static final boolean kIsLauncherLobber = true;
 
     // kLobber controls shooter speed
-    public static final double kLobberRPS = 14.0;
+    public static final double kLobberRPS = 24.0;
     public static final double kShooterRPS = 20.0;
 
     public static final double kLauncherTicksPerRotation = 2048.0;

@@ -11,8 +11,7 @@ import ca.warp7.frc2022.subsystems.Intake;
 public class IntakingCommand extends CommandBase{
     private DoubleSupplier intakingSupplier;
     private Intake intake = Intake.getInstance();
-    private double pTime;
-    
+        
     public IntakingCommand(DoubleSupplier intakingSupplier) {
         this.intakingSupplier = intakingSupplier;
         addRequirements(intake);
@@ -27,21 +26,16 @@ public class IntakingCommand extends CommandBase{
 
     @Override
     public void initialize() {
-        pTime = -1.0;
     }
 
     @Override
     public void execute() {
-        double time = Timer.getFPGATimestamp();
         double intakeSpeed = intakingSupplier.getAsDouble();
         boolean intaking = intakeSpeed != 0.0;
         intake.setExtended(intaking);
         if (intaking) {
-            intake.setSpeed(0.05 * intakeSpeed);
-            pTime = time;
-        } else if (time - pTime < 0.75 && pTime >= 0)
-            intake.setSpeed(0.4);
-        else
+            intake.setSpeed(0.20 * intakeSpeed);
+        } else
             intake.setSpeed(0.0);
     }
 }
