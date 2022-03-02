@@ -40,6 +40,9 @@ public class Launcher  implements LauncherInterface{
         launcherMotorMaster = MotorControlHelper.createMasterTalonFX(kLauncherMasterID);
         launcherMotorFollower = MotorControlHelper.assignFollowerTalonFX(launcherMotorMaster, kLauncherFollowerID, InvertType.OpposeMaster);
 
+        launcherMotorMaster.setNeutralMode(NeutralMode.Coast);
+        launcherMotorFollower.setNeutralMode(NeutralMode.Coast);
+
         if(kIsLauncherLobber){
             fullSpeedRPS = kLobberRPS;
         }
@@ -111,5 +114,9 @@ public class Launcher  implements LauncherInterface{
 
     private void setVoltage(double voltage) {
         launcherMotorMaster.set(ControlMode.PercentOutput, voltage);
+    }
+
+    public void reset() {
+        voltageCalculator = new PIDController(new PID(kLauncherP, kLauncherI, kLauncherD, kLauncherF));
     }
 }
