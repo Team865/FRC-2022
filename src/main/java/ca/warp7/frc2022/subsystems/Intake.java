@@ -12,6 +12,9 @@ import static ca.warp7.frc2022.Constants.*;
 public class Intake implements Subsystem {
     private static Intake instance;
 
+    private double speedFromIntake;
+    private double speedFromElevator;
+
     public static Intake getInstance() {
         if (instance == null) instance = new Intake();
         return instance;
@@ -26,8 +29,12 @@ public class Intake implements Subsystem {
     private Intake(){
     }
 
-    public void setSpeed(double speed) {
-        intakeMotor.set(TalonFXControlMode.PercentOutput, speed);
+    public void setSpeedFromIntake(double speed) {
+        speedFromIntake = speed;
+    }
+
+    public void setSpeedFromElevator(double speed) {
+        speedFromElevator = speed;
     }
 
     public void setExtended(boolean extended) {
@@ -40,5 +47,18 @@ public class Intake implements Subsystem {
 
     public void toggle() {
         setExtended(!intakePiston.get());
+    }
+
+    @Override
+    public void periodic() {
+        
+        if (speedFromIntake >= speedFromElevator) {
+            intakeMotor.set(TalonFXControlMode.PercentOutput, speedFromIntake);
+        } else if (speedFromElevator > speedFromIntake) {
+            intakeMotor.set(TalonFXControlMode.PercentOutput, speedFromElevator);
+        } else {
+            intakeMotor.set(TalonFXControlMode.PercentOutput, 0.0);
+        }
+
     }
 }

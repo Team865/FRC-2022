@@ -28,10 +28,13 @@ public class FeedCommand  extends CommandBase{
         boolean highBeamBreak = Elevator.getHighBeamBreak();
         double feedSpeed = speedSupplier.getAsDouble();
 
-        //if (feedSpeed != 0) {
+        if (feedSpeed != 0) {
             elevator.setSpeed(feedSpeed);
-        //}
-        
+            intake.setSpeedFromElevator(0.20 * feedSpeed);
+        } else {
+            elevator.setSpeed(0.0);
+            intake.setSpeedFromElevator(0.0);
+        }
     }
 
     @Override

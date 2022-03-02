@@ -34,8 +34,8 @@ public class IntakingCommand extends CommandBase{
         boolean intaking = intakeSpeed != 0.0;
         intake.setExtended(intaking);
         if (intaking) {
-            intake.setSpeed(0.20 * intakeSpeed);
+            intake.setSpeedFromIntake(0.20 * intakeSpeed);
         } else
-            intake.setSpeed(0.0);
+            intake.setSpeedFromIntake(0.0);
     }
 }
