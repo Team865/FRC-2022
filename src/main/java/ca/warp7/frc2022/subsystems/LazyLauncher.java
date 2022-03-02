@@ -29,4 +29,7 @@ public class LazyLauncher implements LauncherInterface {
     public double getPercentPower(){
         return (0.0);
     }
+
+    @Override
+    public void reset() {}
 }

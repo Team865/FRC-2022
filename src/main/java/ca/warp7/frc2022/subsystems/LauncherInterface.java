@@ -9,4 +9,6 @@ public interface LauncherInterface extends Subsystem {
     public void setRunLauncher(boolean newRunLauncher);
 
     public double getPercentPower();
+
+    public void reset();
 }

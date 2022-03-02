@@ -12,11 +12,14 @@ import ca.warp7.frc2022.auton.commands.RobotStateCommand;
 import ca.warp7.frc2022.auton.commands.VisionAlignCommand;
 import ca.warp7.frc2022.lib.Util;
 import ca.warp7.frc2022.lib.XboxController;
+import ca.warp7.frc2022.subsystems.Launcher;
+import ca.warp7.frc2022.subsystems.LauncherInterface;
 import ca.warp7.frc2022.subsystems.Limelight;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 
 /**
  * This class is responsible for scheduling the proper commands while operator
@@ -42,6 +45,8 @@ public class TeleopCommand extends CommandBase {
     private Command setHighGearDriveCommand = SingleFunctionCommand.getSetDriveHighGear();
     private Command zeroYawCommand = SingleFunctionCommand.getZeroYaw();
     private Command brakeCommand = SingleFunctionCommand.getSetDriveBrakeMode();
+
+    private LauncherInterface launcher = Launcher.getInstance();
 
     private XboxController driver = new XboxController(0);
     private XboxController operator = new XboxController(1);
@@ -90,7 +95,7 @@ public class TeleopCommand extends CommandBase {
 
     private double getFeedSpeed() {
         if (isFeeding)
-            return Util.applyDeadband(driver.rightTrigger, 0.2) * (isReversed ? -1 : 1);
+            return Util.applyDeadband(driver.rightTrigger, 0.0) * (isReversed ? -1 : 1);
         return 0.0;
     }
 
@@ -103,6 +108,8 @@ public class TeleopCommand extends CommandBase {
     public void initialize() {
         farShotAdjustment = 0.0;
         closeShotAdjustment = 0.0;
+
+        launcher.reset();
 
         zeroYawCommand.schedule();
         resetRobotStateCommand.schedule();
@@ -135,9 +142,9 @@ public class TeleopCommand extends CommandBase {
         }
 
         if (!isFeeding) {
-            isFeeding = driver.leftTrigger > 0.22;
+            isFeeding = driver.rightTrigger > 0.22;
         } else {
-            isFeeding = driver.leftTrigger > 0.2;
+            isFeeding = driver.rightTrigger > 0.2;
         }
 
         if (driver.yButton.isPressed()) {
