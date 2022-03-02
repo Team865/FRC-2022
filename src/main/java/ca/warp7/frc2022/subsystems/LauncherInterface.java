@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 
 public interface LauncherInterface extends Subsystem {
     //Bad temp documentation note: Epsilon is the allowed decemal error since doubles and floats subtract weird.
-    public boolean isTargetReached(double epsilon);
+    public boolean isTargetReached();
 
     public void setRunLauncher(boolean newRunLauncher);
 
