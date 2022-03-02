@@ -3,6 +3,7 @@ package ca.warp7.frc2022.subsystems;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import ca.warp7.frc2022.lib.motor.MotorControlHelper;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import static ca.warp7.frc2022.Constants.*;
 
@@ -23,6 +24,6 @@ public class Climber implements Subsystem {
     }
   
     public void setSpeed(double speed){
-        climberMaster.set(ControlMode.PercentOutput, speed);
+        climberMaster.set(TalonSRXControlMode.PercentOutput, speed);
     }
 }
