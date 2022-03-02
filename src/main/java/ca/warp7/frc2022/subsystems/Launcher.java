@@ -72,7 +72,7 @@ public class Launcher  implements LauncherInterface{
     //Bad temp documentation note: Epsilon is the allowed decemal error since doubles and floats subtract weird.
     @Override
     public boolean isTargetReached() {
-        return Util.epsilonEquals(getPercentError(), 0.0, 0.001);
+        return Util.epsilonEquals(getPercentError(), 0.0, 0.1);
     }
 
     @Override
