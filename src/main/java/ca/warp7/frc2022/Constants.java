@@ -105,7 +105,7 @@ public final class Constants {
 
     // Drive Train Constants
 
-    public static final double kWheelBaseRadius = 0.375; // metres
+    public static final double kWheelBaseRadius = 0.31; // metres
     public static final double kWheelRadius = 0.0760858711932102; // metres
     public static final double kMaxVoltage = 12.0; // volts
 

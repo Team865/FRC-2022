@@ -62,7 +62,7 @@ public class TeleopCommand extends CommandBase {
 //    }
 
     public double getIntakeSpeed() {
-        // SmartDashboard.putBoolean("Intake isReversed", isReversed);
+        SmartDashboard.putBoolean("Intake isReversed", isReversed);
         if (isIntaking)
             return Util.applyDeadband(driver.rightTrigger, 0.2) * (isReversed ? -1 : 1);
         return 0.0;
@@ -98,7 +98,7 @@ public class TeleopCommand extends CommandBase {
 
 
     private double getClimbSpeed() {
-        return Util.applyDeadband(operator.leftY, 0.2);
+        return Util.applyDeadband(operator.leftY, 0.4);
     }
 
     private boolean isLaunching() {

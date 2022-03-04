@@ -38,9 +38,7 @@ public class FeedCommand  extends CommandBase{
         double feedSpeed = speedSupplier.getAsDouble();
         double time = Timer.getFPGATimestamp();
 
-
-        // Definitely needs a lot of optimization. 
-        speedWithoutIntake = 0.5 * feedSpeed;
+        speedWithoutIntake = 0.8 * feedSpeed;
 
         if (lowBeamBreak && !highBeamBreak) {
             speedWithIntake = 0.3;
@@ -54,10 +52,6 @@ public class FeedCommand  extends CommandBase{
                 speedWithIntake = 0.0;
             }
         }
-
-        // if (highBeamBreak && launcher.isTargetReached()) {
-        //      speedWithoutIntake = 0.3;
-        // }
 
         if (Math.abs(speedWithoutIntake) > speedWithIntake) {
             elevator.setSpeed(speedWithoutIntake);

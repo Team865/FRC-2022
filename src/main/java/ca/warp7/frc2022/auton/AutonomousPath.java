@@ -29,15 +29,16 @@ public class AutonomousPath {
     
 
     public static final Pose2d kStarting =
-        new Pose2d(0.5, 0.0, new Rotation2d());
+        new Pose2d(0.0, 0.0, new Rotation2d());
 
     public static final Pose2d kTeleopStart =
         new Pose2d(0.0, 0.0, new Rotation2d());
 
     public static Command moveBack() {
-        return new TimedPath2d("Shoot then move back.", kStarting)
-            .addPoint(kTeleopStart)
+        return new TimedPath2d("Shoot then move back.", new Pose2d(2, 0, new Rotation2d()))
+            .addPoint(0.0, 0, 0)
             .setConfig(createTrajectoryConfig())
+            .setReversed(true)
             .setFollower(new RamseteFollower())
             .convertTo(DriveTrajectoryCommand::new);
     }
