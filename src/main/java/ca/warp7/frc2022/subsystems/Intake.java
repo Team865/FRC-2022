@@ -52,9 +52,9 @@ public class Intake implements Subsystem {
     @Override
     public void periodic() {
         
-        if (speedFromIntake >= speedFromElevator) {
+        if (Math.abs(speedFromIntake) >= Math.abs(speedFromElevator)) {
             intakeMotor.set(TalonFXControlMode.PercentOutput, speedFromIntake);
-        } else if (speedFromElevator > speedFromIntake) {
+        } else if (Math.abs(speedFromElevator) > Math.abs(speedFromIntake)) {
             intakeMotor.set(TalonFXControlMode.PercentOutput, speedFromElevator);
         } else {
             intakeMotor.set(TalonFXControlMode.PercentOutput, 0.0);

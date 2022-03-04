@@ -72,7 +72,7 @@ public final class Constants {
 
     // kLobber controls shooter speed
     public static final double kLobberRPS = 24.0;
-    public static final double kShooterRPS = 20.0;
+    public static final double kShooterRPS = 30.0;
 
     public static final double kLauncherTicksPerRotation = 2048.0;
     public static final double kLauncherVelocityFrequency = 0.1;

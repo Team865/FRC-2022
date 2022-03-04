@@ -24,11 +24,11 @@ public class Elevator implements Subsystem {
 
 
     public static boolean getLowBeamBreak() {
-        return beamBreakLow.get();
+        return !beamBreakLow.get();
     }
 
     public static boolean getHighBeamBreak() {
-        return beamBreakHigh.get();
+        return !beamBreakHigh.get();
     }
 
     public void setSpeed(double speed) {

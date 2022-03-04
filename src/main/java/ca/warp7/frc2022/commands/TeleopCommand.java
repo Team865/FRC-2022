@@ -30,9 +30,6 @@ public class TeleopCommand extends CommandBase {
             new KinematicsDriveCommand(this::getXSpeed, this::getZRotation, this::isQuickTurn) :
             new PercentDriveCommand(this::getXSpeed, this::getZRotation, this::isQuickTurn);
 
-    private Command visionAlignCommand = new VisionAlignCommand(this::getVisionAlignSpeed);
-
-
     private Command intakeCommand = new IntakingCommand(this::getIntakeSpeed);
     private Command feedCommand = new FeedCommand(this::getFeedSpeed);
     private Command climbCommand = new ClimberSpeedCommand(this::getClimbSpeed);
@@ -54,11 +51,11 @@ public class TeleopCommand extends CommandBase {
     private boolean isIntaking = false;
     private boolean isReversed = false;
 
-    private double farShotAdjustment = 0.0;
-    private double closeShotAdjustment = 0.0;
     private boolean isClose = false;
     private boolean isPriming = false;
     private boolean isFeeding = false;
+    private boolean isHighGoal = false;
+    private boolean isLaunching = false;
 
 //    public double getControlPanelSpinnerSpeed() {
 //        return operator.rightX;
@@ -67,7 +64,7 @@ public class TeleopCommand extends CommandBase {
     public double getIntakeSpeed() {
         // SmartDashboard.putBoolean("Intake isReversed", isReversed);
         if (isIntaking)
-            return Util.applyDeadband(driver.leftTrigger, 0.2) * (isReversed ? -1 : 1);
+            return Util.applyDeadband(driver.rightTrigger, 0.2) * (isReversed ? -1 : 1);
         return 0.0;
     }
 
@@ -95,20 +92,25 @@ public class TeleopCommand extends CommandBase {
 
     private double getFeedSpeed() {
         if (isFeeding)
-            return Util.applyDeadband(driver.rightTrigger, 0.0) * (isReversed ? -1 : 1);
+            return Util.applyDeadband(operator.rightTrigger, 0.2) * (isReversed ? -1 : 1);
         return 0.0;
     }
 
 
     private double getClimbSpeed() {
-        return Util.applyDeadband(operator.leftY, 0.3);
+        return Util.applyDeadband(operator.leftY, 0.2);
+    }
+
+    private boolean isLaunching() {
+        return isLaunching;
+    }
+
+    private boolean isHighGoal() {
+        return isHighGoal;
     }
 
     @Override
     public void initialize() {
-        farShotAdjustment = 0.0;
-        closeShotAdjustment = 0.0;
-
         launcher.reset();
 
         zeroYawCommand.schedule();
@@ -127,7 +129,8 @@ public class TeleopCommand extends CommandBase {
     public void execute() {
         driver.collectControllerData();
         operator.collectControllerData();
-
+        launcher.setRunLauncher(this.isLaunching());
+        launcher.isHighGoal(this.isHighGoal());
         // Driver
 
         if (driver.rightBumper.isPressed())
@@ -136,57 +139,29 @@ public class TeleopCommand extends CommandBase {
             setLowGearDriveCommand.schedule();
 
         if (!isIntaking) {
-            isIntaking = driver.leftTrigger > 0.22;
+            isIntaking = driver.rightTrigger > 0.22;
         } else {
-            isIntaking = driver.leftTrigger > 0.2;
-        }
-
-        if (!isFeeding) {
-            isFeeding = driver.rightTrigger > 0.22;
-        } else {
-            isFeeding = driver.rightTrigger > 0.2;
+            isIntaking = driver.rightTrigger > 0.2;
         }
 
         if (driver.yButton.isPressed()) {
             isReversed = !isReversed;
         }
 
-        if (driver.aButton.isPressed()) {
-            visionAlignCommand.schedule();
-        } else if (driver.aButton.isReleased()) {
-            visionAlignCommand.cancel();
-            curvatureDriveCommand.schedule();
-        }
-
         // Operator
 
-        if (operator.leftTrigger > 0.2) {
-            isPriming = true;
-            isClose = true;
-            Limelight.getInstance().setPipeline(0);
-        } else if (operator.rightTrigger > 0.3) {
-            isPriming = true;
-            isClose = false;
-            Limelight.getInstance().setPipeline(1);
-        } else
-            isPriming = false;
-
-        if (operator.leftBumper.isPressed()) {
-            if (isClose) closeShotAdjustment -= 0.5;
-            else farShotAdjustment -= 0.5;
-        }
-        if (operator.rightBumper.isPressed()) {
-            if (isClose) closeShotAdjustment += 0.5;
-            else farShotAdjustment += 0.5;
-        }
-        if (operator.xButton.isPressed()) {
-            if (isClose) closeShotAdjustment -= 5;
-            else farShotAdjustment -= 5;
-        }
         if (operator.yButton.isPressed()) {
-            if (isClose) closeShotAdjustment += 5;
-            else farShotAdjustment += 5;
+            isHighGoal = !isHighGoal;
         }
 
+        if (operator.rightBumper.isPressed()) {
+            isLaunching = !isLaunching;
+        }
+
+        if (!isFeeding) {
+            isFeeding = operator.rightTrigger > 0.22;
+        } else {
+            isFeeding = operator.rightTrigger > 0.2;
+        }
     }
 }

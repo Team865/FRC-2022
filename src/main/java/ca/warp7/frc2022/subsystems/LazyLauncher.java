@@ -32,4 +32,8 @@ public class LazyLauncher implements LauncherInterface {
 
     @Override
     public void reset() {}
+
+    @Override
+    public void isHighGoal(boolean isHighGoal) {
+    }
 }

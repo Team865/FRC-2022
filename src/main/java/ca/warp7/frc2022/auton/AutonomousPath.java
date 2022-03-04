@@ -2,6 +2,7 @@ package ca.warp7.frc2022.auton;
 
 import ca.warp7.frc2022.Constants;
 import ca.warp7.frc2022.auton.commands.DriveTrajectoryCommand;
+import ca.warp7.frc2022.auton.commands.RobotStateCommand;
 import ca.warp7.frc2022.auton.pathfollower.RamseteFollower;
 import ca.warp7.frc2022.lib.trajectory.TimedPath2d;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -26,19 +27,19 @@ public class AutonomousPath {
                 .addConstraint(kKinematicsConstraint);
     }
     
-    public static final Pose2d kOrigin =
-            new Pose2d(0.0, 0.0, new Rotation2d());
 
-    public static Command getCircle() {
-        return new TimedPath2d("Circle movement.", new Pose2d())
-                .addPoint(new Pose2d(1.25, -0.75, Rotation2d.fromDegrees(0.0)))
-                .addPoint(new Pose2d(2.5, 0, Rotation2d.fromDegrees(90.0)))
-                .addPoint(new Pose2d(1.25, 0.75, Rotation2d.fromDegrees(180.0)))
-                .addPoint(new Pose2d(0.0, 0.0, Rotation2d.fromDegrees(270)))
-                .addPoint(new Pose2d(1.25, -0.75, Rotation2d.fromDegrees(0.0)))
-                .setConfig(createTrajectoryConfig())
-                .setFollower(new RamseteFollower())
-                .convertTo(DriveTrajectoryCommand::new);
+    public static final Pose2d kStarting =
+        new Pose2d(0.5, 0.0, new Rotation2d());
+
+    public static final Pose2d kTeleopStart =
+        new Pose2d(0.0, 0.0, new Rotation2d());
+
+    public static Command moveBack() {
+        return new TimedPath2d("Shoot then move back.", kStarting)
+            .addPoint(kTeleopStart)
+            .setConfig(createTrajectoryConfig())
+            .setFollower(new RamseteFollower())
+            .convertTo(DriveTrajectoryCommand::new);
     }
 }
 

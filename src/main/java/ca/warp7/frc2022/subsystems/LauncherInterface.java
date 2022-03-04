@@ -8,6 +8,8 @@ public interface LauncherInterface extends Subsystem {
 
     public void setRunLauncher(boolean newRunLauncher);
 
+    public void isHighGoal(boolean isHighGoal);
+
     public double getPercentPower();
 
     public void reset();
