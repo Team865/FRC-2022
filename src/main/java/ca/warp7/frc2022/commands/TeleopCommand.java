@@ -15,6 +15,7 @@ import ca.warp7.frc2022.lib.XboxController;
 import ca.warp7.frc2022.subsystems.Launcher;
 import ca.warp7.frc2022.subsystems.LauncherInterface;
 import ca.warp7.frc2022.subsystems.Limelight;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -56,6 +57,7 @@ public class TeleopCommand extends CommandBase {
     private boolean isFeeding = false;
     private boolean isHighGoal = false;
     private boolean isLaunching = false;
+    private boolean isClimbing = false;
 
 //    public double getControlPanelSpinnerSpeed() {
 //        return operator.rightX;
@@ -98,7 +100,16 @@ public class TeleopCommand extends CommandBase {
 
 
     private double getClimbSpeed() {
-        return Util.applyDeadband(operator.leftY, 0.4);
+        SmartDashboard.putBoolean("Match climb configuration", !isClimbing);
+        double climbSpeed = Math.abs(Util.applyDeadband(operator.leftY, 0.4));
+        
+        if (isClimbing) {
+            return climbSpeed;
+        } else if (!isClimbing) {
+            return climbSpeed * -1;
+        } else {
+            return 0;
+        }
     }
 
     private boolean isLaunching() {
@@ -162,6 +173,10 @@ public class TeleopCommand extends CommandBase {
             isFeeding = operator.rightTrigger > 0.22;
         } else {
             isFeeding = operator.rightTrigger > 0.2;
+        }
+
+        if (operator.startButton.isPressed()) {
+            isClimbing = !isClimbing;
         }
     }
 }

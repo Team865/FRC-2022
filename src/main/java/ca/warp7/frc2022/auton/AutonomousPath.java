@@ -36,7 +36,7 @@ public class AutonomousPath {
 
     public static Command moveBack() {
         return new TimedPath2d("Shoot then move back.", new Pose2d(2, 0, new Rotation2d()))
-            .addPoint(0.0, 0, 0)
+            .addPoint(0.32, 0, 0)
             .setConfig(createTrajectoryConfig())
             .setReversed(true)
             .setFollower(new RamseteFollower())

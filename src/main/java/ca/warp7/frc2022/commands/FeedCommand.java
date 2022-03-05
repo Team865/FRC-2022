@@ -38,7 +38,7 @@ public class FeedCommand  extends CommandBase{
         double feedSpeed = speedSupplier.getAsDouble();
         double time = Timer.getFPGATimestamp();
 
-        speedWithoutIntake = 0.8 * feedSpeed;
+        speedWithoutIntake = 0.6 * feedSpeed;
 
         if (lowBeamBreak && !highBeamBreak) {
             speedWithIntake = 0.3;
@@ -47,7 +47,7 @@ public class FeedCommand  extends CommandBase{
 
         if (highBeamBreak) {
             if (time - pTime < 0.40 && pTime >= 0) {
-                speedWithIntake = 0.3;
+                speedWithIntake = 0.2;
             } else {
                 speedWithIntake = 0.0;
             }
