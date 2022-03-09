@@ -72,7 +72,7 @@ public final class Constants {
 
     // kLobber controls shooter speed
     public static final double kLobberRPS = 24.0;
-    public static final double kShooterRPS = 20.0;
+    public static final double kShooterRPS = 47.0;
 
     public static final double kLauncherTicksPerRotation = 2048.0;
     public static final double kLauncherVelocityFrequency = 0.1;
@@ -105,7 +105,7 @@ public final class Constants {
 
     // Drive Train Constants
 
-    public static final double kWheelBaseRadius = 0.375; // metres
+    public static final double kWheelBaseRadius = 0.31; // metres
     public static final double kWheelRadius = 0.0760858711932102; // metres
     public static final double kMaxVoltage = 12.0; // volts
 

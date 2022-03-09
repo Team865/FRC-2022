@@ -12,11 +12,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Launcher  implements LauncherInterface{
     private static LauncherInterface instance;
-    private final double fullSpeedRPS;
+    private double fullSpeedRPS;
     private double targetRPS;
     private double currentRPS;
     private PIDController voltageCalculator;
     private boolean runLauncher;
+    private boolean highGoal;
     private double outputVoltPercent;
     private static TalonFX launcherMotorMaster;
     private static TalonFX launcherMotorFollower;
@@ -35,20 +36,12 @@ public class Launcher  implements LauncherInterface{
     private Launcher(){
         voltageCalculator = new PIDController(new PID(kLauncherP, kLauncherI, kLauncherD, kLauncherF));
 
-        runLauncher = true;
-
         launcherMotorMaster = MotorControlHelper.createMasterTalonFX(kLauncherMasterID);
         launcherMotorFollower = MotorControlHelper.assignFollowerTalonFX(launcherMotorMaster, kLauncherFollowerID, InvertType.OpposeMaster);
 
         launcherMotorMaster.setNeutralMode(NeutralMode.Coast);
         launcherMotorFollower.setNeutralMode(NeutralMode.Coast);
 
-        if(kIsLauncherLobber){
-            fullSpeedRPS = kLobberRPS;
-        }
-        else{
-            fullSpeedRPS = kShooterRPS;
-        }
         targetRPS = 0.0;
         currentRPS = 0.0;
     }
@@ -60,6 +53,7 @@ public class Launcher  implements LauncherInterface{
             / kLauncherTicksPerRotation / kLauncherVelocityFrequency * kLauncherGearRatio;
         this.updateTargetRPS();
         this.updateVoltage();
+        this.updateHighGoal();
         
         SmartDashboard.putNumber("Current voltage percent", outputVoltPercent * 100);
         SmartDashboard.putNumber("Current RPS dif", this.getError());
@@ -67,6 +61,7 @@ public class Launcher  implements LauncherInterface{
         SmartDashboard.putNumber("Current RPS", currentRPS);
         SmartDashboard.putBoolean("Is launcher running", runLauncher);
         SmartDashboard.putBoolean("Is RPS target reached", this.isTargetReached());
+        SmartDashboard.putBoolean("Is shooting high goal", highGoal);
     }
 
     //Bad temp documentation note: Epsilon is the allowed decemal error since doubles and floats subtract weird.
@@ -81,8 +76,22 @@ public class Launcher  implements LauncherInterface{
     }
 
     @Override
+    public void isHighGoal(boolean isHighGoal) {
+        highGoal = isHighGoal;
+    }
+
+    @Override
     public double getPercentPower(){
         return (outputVoltPercent);
+    }
+
+    private void updateHighGoal() {
+        if(highGoal){
+            fullSpeedRPS = kShooterRPS;
+        }
+        else{
+            fullSpeedRPS = kLobberRPS;
+        }
     }
 
     private void updateTargetRPS(){
