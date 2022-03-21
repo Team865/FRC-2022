@@ -123,6 +123,7 @@ public class TeleopCommand extends CommandBase {
     @Override
     public void initialize() {
         launcher.reset();
+        Limelight.getInstance().setPipeline(0);
 
         zeroYawCommand.schedule();
         resetRobotStateCommand.schedule();
@@ -143,11 +144,6 @@ public class TeleopCommand extends CommandBase {
         launcher.setRunLauncher(this.isLaunching());
         launcher.isHighGoal(this.isHighGoal());
         // Driver
-
-        if (driver.rightBumper.isPressed())
-            setHighGearDriveCommand.schedule();
-        else if (driver.rightBumper.isReleased())
-            setLowGearDriveCommand.schedule();
 
         if (!isIntaking) {
             isIntaking = driver.rightTrigger > 0.22;

@@ -35,12 +35,36 @@ public class AutonomousPath {
         new Pose2d(0.0, 0.0, new Rotation2d());
 
     public static Command moveBack() {
-        return new TimedPath2d("Shoot then move back.", new Pose2d(2, 0, new Rotation2d()))
-            .addPoint(0.32, 0, 0)
+        return new TimedPath2d("Shoot then move back.", new Pose2d(5, 0, new Rotation2d()))
+            .addPoint(2.05, 0, 0)
             .setConfig(createTrajectoryConfig())
             .setReversed(true)
             .setFollower(new RamseteFollower())
             .convertTo(DriveTrajectoryCommand::new);
     }
-}
+    public static Command moveBackfromback() {
+        return new TimedPath2d("move back.", new Pose2d(2.05, 0, new Rotation2d()))
+            .addPoint(2.65, 0, 0)
+            .setConfig(createTrajectoryConfig())
+            .setReversed(false)
+            .setFollower(new RamseteFollower())
+            .convertTo(DriveTrajectoryCommand::new);
+    }
+    public static Command grabBall() {
+        return new TimedPath2d("move back.", new Pose2d(0.32, 0, new Rotation2d()))
+            .addPoint(0.4, 0, 0)
+            .setConfig(createTrajectoryConfig())
+            .setReversed(false)
+            .setFollower(new RamseteFollower())
+            .convertTo(DriveTrajectoryCommand::new);
+    }
+    public static Command returnFromBall() {
+        return new TimedPath2d("move back.", new Pose2d(2.65, 0, new Rotation2d()))
+            .addPoint(4.5, 0, 0)
+            .setConfig(createTrajectoryConfig())
+            .setReversed(false)
+            .setFollower(new RamseteFollower())
+            .convertTo(DriveTrajectoryCommand::new);
+    }
 
+}

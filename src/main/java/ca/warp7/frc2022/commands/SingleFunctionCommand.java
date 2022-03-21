@@ -20,6 +20,14 @@ public class SingleFunctionCommand {
         });
     }
 
+    public static Command startLauncher() {
+        LauncherInterface launcher = Launcher.getInstance();
+        return new InstantCommand(() -> {
+            launcher.setRunLauncher(true);
+        });
+
+    }
+
     public static Command getSetDriveLowGear() {
         DriveTrain driveTrain = DriveTrain.getInstance();
         return new InstantCommand(() -> {

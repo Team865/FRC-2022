@@ -5,6 +5,7 @@ import ca.warp7.frc2022.lib.control.PID;
 import ca.warp7.frc2022.lib.control.PIDController;
 import ca.warp7.frc2022.subsystems.DriveTrain;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.math.MathUtil;
@@ -52,6 +53,7 @@ public class QuickTurnCommand extends CommandBase {
     public void execute() {
         // this is ensured to be between [-180, 180]
         double errorDegrees = errorSupplier.get().getDegrees();
+        SmartDashboard.putNumber("error supplier", errorDegrees);
 
         double result = pidController.calculate(errorDegrees);
         double correction = MathUtil.clamp(
@@ -64,7 +66,15 @@ public class QuickTurnCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return pidController.isDone();
+        double errorDegrees = errorSupplier.get().getDegrees();
+
+            System.out.println(errorDegrees);
+        if (Math.abs(errorDegrees) < 1 ) {
+            System.out.println("Quick turn finished");
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -87,12 +97,13 @@ public class QuickTurnCommand extends CommandBase {
      * Move by a certain relative angle
      */
     public static Command ofRelativeAngle(Rotation2d delta) {
+        System.out.println("Quick turned called");
         DriveTrain driveTrain = DriveTrain.getInstance();
         var targetState = new Object() { Rotation2d value; };
         var controller = new PIDController(kQuickTurnPID);
         controller.errorEpsilon = 2.0;
         controller.dErrorEpsilon = 2.0;
-        controller.minTimeInEpsilon = 0.5;
+        controller.minTimeInEpsilon = 5.0;
         return new QuickTurnCommand(
                 () -> targetState.value = driveTrain.getYaw().plus(delta),
                 () -> targetState.value.minus(driveTrain.getYaw()),

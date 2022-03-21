@@ -72,11 +72,11 @@ public final class Constants {
 
     // kLobber controls shooter speed
     public static final double kLobberRPS = 24.0;
-    public static final double kShooterRPS = 47.0;
+    public static final double kShooterRPS = 44.0;
 
     public static final double kLauncherTicksPerRotation = 2048.0;
     public static final double kLauncherVelocityFrequency = 0.1;
-    public static final double kLauncherGearRatio = 16.0/36.0;
+    public static final double kLauncherGearRatio = 16.0/27.0;
 
     // Tuning for the launcher's PID
     public static final double kLauncherP = 0.001;
@@ -110,7 +110,7 @@ public final class Constants {
     public static final double kMaxVoltage = 12.0; // volts
 
     public static class LowGear {
-        public static final double kGearRatio = 42.0 / 10.0 * 60.0 / 14.0; // 18.0
+        public static final double kGearRatio = 9.47;
 
         public static final double kMetresPerRotation =
                 (2 * Math.PI * kWheelRadius) / kGearRatio; // ticks/m
