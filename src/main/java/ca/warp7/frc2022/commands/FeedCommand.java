@@ -20,9 +20,11 @@ public class FeedCommand  extends CommandBase{
     double speedWithIntake;
 
     private DoubleSupplier speedSupplier;
+    private DoubleSupplier speedWithIntakeSupplier;
 
-    public FeedCommand(DoubleSupplier speedSupplier) {
+    public FeedCommand(DoubleSupplier speedSupplier, DoubleSupplier speedWithIntakeSupplier) {
         this.speedSupplier = speedSupplier;
+        this.speedWithIntake = speedWithIntake;
         addRequirements(elevator);
     }
 
@@ -36,9 +38,11 @@ public class FeedCommand  extends CommandBase{
         boolean lowBeamBreak = Elevator.getLowBeamBreak();
         boolean highBeamBreak = Elevator.getHighBeamBreak();
         double feedSpeed = speedSupplier.getAsDouble();
+        double feedSpeedWithIntake = speedWithIntakeSupplier.getAsDouble();
         double time = Timer.getFPGATimestamp();
 
-        speedWithoutIntake = 0.6 * feedSpeed;
+        speedWithoutIntake = 0.5 * feedSpeed;
+        speedWithIntake = 0.5 * feedSpeedWithIntake;
 
         if (lowBeamBreak && !highBeamBreak) {
             speedWithIntake = 0.3;

@@ -37,7 +37,7 @@ public final class DriveTrain implements Subsystem {
     private static DriveTrainVariant driveTrainVariant;
 
     private final LazySolenoid shifterSolenoid =
-            new LazySolenoid(kDriveShifterID, kEnableSolenoids);
+            new LazySolenoid(4, kEnableSolenoids);
 
     private final AHRS navx = new AHRS(I2C.Port.kMXP);
 

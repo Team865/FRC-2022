@@ -16,6 +16,7 @@ import ca.warp7.frc2022.subsystems.Launcher;
 import ca.warp7.frc2022.subsystems.LauncherInterface;
 import ca.warp7.frc2022.subsystems.Limelight;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -32,8 +33,8 @@ public class TeleopCommand extends CommandBase {
             new PercentDriveCommand(this::getXSpeed, this::getZRotation, this::isQuickTurn);
 
     private Command intakeCommand = new IntakingCommand(this::getIntakeSpeed);
-    private Command feedCommand = new FeedCommand(this::getFeedSpeed);
-    private Command climbCommand = new ClimberSpeedCommand(this::getClimbSpeed);
+    private Command feedCommand = new FeedCommand(this::getFeedSpeed, this::getFeedSpeedWithIntake);
+    private Command climbCommand = new ClimbCommand(this::getClimbSpeed, this::getFirstPiston, this::getSecondPiston);
 
     //    private Command controlPanelDisplay = new ControlPanelCommand(this::getControlPanelSpinnerSpeed);
 
@@ -55,9 +56,12 @@ public class TeleopCommand extends CommandBase {
     private boolean isClose = false;
     private boolean isPriming = false;
     private boolean isFeeding = false;
+    private boolean isFeedingWithIntake = false;
     private boolean isHighGoal = false;
     private boolean isLaunching = false;
     private boolean isClimbing = false;
+    private boolean firstSolenoidOpen = false;
+    private boolean secondSolenoidOpen = false;
 
 //    public double getControlPanelSpinnerSpeed() {
 //        return operator.rightX;
@@ -67,6 +71,12 @@ public class TeleopCommand extends CommandBase {
         SmartDashboard.putBoolean("Intake isReversed", isReversed);
         if (isIntaking)
             return Util.applyDeadband(driver.rightTrigger, 0.2) * (isReversed ? -1 : 1);
+        return 0.0;
+    }
+
+    public double getFeedSpeedWithIntake() {
+        if (isFeedingWithIntake)
+            return Util.applyDeadband(driver.leftTrigger, 0.2) * (isReversed ? -1 : 1);
         return 0.0;
     }
 
@@ -112,6 +122,14 @@ public class TeleopCommand extends CommandBase {
         }
     }
 
+    private boolean getFirstPiston() {
+        return firstSolenoidOpen;
+    }
+
+    private boolean getSecondPiston() {
+        return secondSolenoidOpen;
+    }
+
     private boolean isLaunching() {
         return isLaunching;
     }
@@ -146,9 +164,15 @@ public class TeleopCommand extends CommandBase {
         // Driver
 
         if (!isIntaking) {
-            isIntaking = driver.rightTrigger > 0.22;
-        } else {
             isIntaking = driver.rightTrigger > 0.2;
+        } else {
+            isIntaking = false;
+        }
+
+        if (!isFeedingWithIntake) {
+            isFeedingWithIntake = driver.leftTrigger > 0.2;
+        } else {
+            isFeedingWithIntake = false;
         }
 
         if (driver.yButton.isPressed()) {
@@ -162,13 +186,22 @@ public class TeleopCommand extends CommandBase {
         }
 
         if (operator.rightBumper.isPressed()) {
+            launcher.reset();
             isLaunching = !isLaunching;
         }
 
+        if (operator.bButton.isPressed()) {
+            firstSolenoidOpen = !firstSolenoidOpen;
+        }
+
+        if (operator.aButton.isPressed()) {
+            secondSolenoidOpen = !secondSolenoidOpen;
+        }
+
         if (!isFeeding) {
-            isFeeding = operator.rightTrigger > 0.22;
-        } else {
             isFeeding = operator.rightTrigger > 0.2;
+        } else {
+            isFeeding = false;
         }
 
         if (operator.startButton.isPressed()) {

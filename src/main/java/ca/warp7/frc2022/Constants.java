@@ -53,8 +53,9 @@ public final class Constants {
     //public static final int kControlPanelManipulatorID = -1;
 
     // PH ID
-    public static final int kDriveShifterID = 0;
     public static final int kIntakePistonID = 1;
+    public static final int kFirstPistonsID = 0;
+    public static final int kSecondPistonsID = 2;
 
     // DIO IDs
 
@@ -71,19 +72,19 @@ public final class Constants {
     public static final boolean kIsLauncherLobber = true;
 
     // kLobber controls shooter speed
-    public static final double kLobberRPS = 24.0;
-    public static final double kShooterRPS = 44.0;
+    public static final double kLobberRPS = 25.5;
+    public static final double kShooterRPS = 60.0;
 
     public static final double kLauncherTicksPerRotation = 2048.0;
     public static final double kLauncherVelocityFrequency = 0.1;
-    public static final double kLauncherGearRatio = 16.0/27.0;
+    public static final double kLauncherGearRatio = 1;
 
     // Tuning for the launcher's PID
-    public static final double kLauncherP = 0.001;
-    public static final double kLauncherI = 0.005;
+    public static final double kLauncherP = 0.0;
+    public static final double kLauncherI = 0.0;
     public static final double kLauncherD = 0.0;
     // This one kinda works like a RPS to voltage ratio.
-    public static final double kLauncherF = 0.022;
+    public static final double kLauncherF = 0.0095;
 
     // Drive Train Tuning
 
