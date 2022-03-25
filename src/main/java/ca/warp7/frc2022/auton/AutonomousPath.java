@@ -20,10 +20,10 @@ public class AutonomousPath {
             new DifferentialDriveKinematics(Constants.kWheelBaseRadius * 2);
 
     public static final TrajectoryConstraint kKinematicsConstraint =
-            new DifferentialDriveKinematicsConstraint(kKinematics, 10.0);
+            new DifferentialDriveKinematicsConstraint(kKinematics, 0.5);
 
     public static TrajectoryConfig createTrajectoryConfig() {
-        return new TrajectoryConfig(2.2, 2.2)
+        return new TrajectoryConfig(0.5, 0.25)
                 .addConstraint(kKinematicsConstraint);
     }
     
@@ -34,9 +34,44 @@ public class AutonomousPath {
     public static final Pose2d kTeleopStart =
         new Pose2d(0.0, 0.0, new Rotation2d());
 
+
+    public static Command moveToCalculatedPoint() {
+        return new TimedPath2d("Move to calculated mid point for ball", new Pose2d(5,0,new Rotation2d()))
+            .addPoint(2.984, 0, 0)
+            .setConfig(createTrajectoryConfig())
+            .setReversed(true)
+            .setFollower(new RamseteFollower())
+            .convertTo(DriveTrajectoryCommand::new);
+    }
+
+    public static Command moveToBall(){
+        return new TimedPath2d("Move to calculated mid point for ball", new Pose2d(2.984,0,new Rotation2d(90)))
+        .addPoint(3.75, 0, 0)
+        .setConfig(createTrajectoryConfig())
+        .setFollower(new RamseteFollower())
+        .convertTo(DriveTrajectoryCommand::new);
+    }
+
+    public static Command moveBackToCalculatedPoint(){
+        return new TimedPath2d("Move to calculated mid point for ball", new Pose2d(3.75,0,new Rotation2d(90)))
+        .addPoint(2.984, 0, 0)
+        .setConfig(createTrajectoryConfig())
+        .setReversed(true)
+        .setFollower(new RamseteFollower())
+        .convertTo(DriveTrajectoryCommand::new);
+    }
+
+    public static Command moveBackToStart(){
+        return new TimedPath2d("Move to calculated mid point for ball", new Pose2d(2.984,0,new Rotation2d()))
+        .addPoint(5.0, 0, 0)
+        .setConfig(createTrajectoryConfig())
+        .setFollower(new RamseteFollower())
+        .convertTo(DriveTrajectoryCommand::new);
+    }
+
     public static Command moveBack() {
         return new TimedPath2d("Shoot then move back.", new Pose2d(5, 0, new Rotation2d()))
-            .addPoint(2.05, 0, 0)
+            .addPoint(2.5, 0, 0)
             .setConfig(createTrajectoryConfig())
             .setReversed(true)
             .setFollower(new RamseteFollower())

@@ -66,15 +66,7 @@ public class QuickTurnCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        double errorDegrees = errorSupplier.get().getDegrees();
-
-            System.out.println(errorDegrees);
-        if (Math.abs(errorDegrees) < 1 ) {
-            System.out.println("Quick turn finished");
-            return true;
-        } else {
-            return false;
-        }
+        return false;
     }
 
     @Override
@@ -114,12 +106,12 @@ public class QuickTurnCommand extends CommandBase {
     /**
      * Align with Limelight by driving the error towards 0
      */
-    public static Command ofLimelight() {
-        DriveTrain driveTrain = DriveTrain.getInstance();
-        Limelight limelight = Limelight.getInstance();
-        return new QuickTurnCommand(
-                () -> Rotation2d.fromDegrees(-limelight.getHorizontalAngle()),
-                new PIDController(new PID(0.0, 0.0, 0.0, 0.0))
-        );
-    }
+    // public static Command ofLimelight() {
+    //     DriveTrain driveTrain = DriveTrain.getInstance();
+    //     Limelight limelight = Limelight.getInstance();
+    //     return new QuickTurnCommand(
+    //             () -> Rotation2d.fromDegrees(-limelight.getHorizontalAngle()),
+    //             new PIDController(new PID(0.0, 0.0, 0.0, 0.0))
+    //     );
+    // }
 }

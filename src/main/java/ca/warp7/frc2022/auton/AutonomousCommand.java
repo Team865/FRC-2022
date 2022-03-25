@@ -13,7 +13,7 @@ public class AutonomousCommand extends CommandBase {
     @Override
     public void initialize() {
         Command mode;
-        mode = AutonomousMode.shootMoveBack();
+        mode = AutonomousMode.closestToHanger();
         mode.schedule();
     }
 }

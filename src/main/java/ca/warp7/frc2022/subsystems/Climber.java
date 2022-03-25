@@ -32,11 +32,10 @@ public class Climber implements Subsystem {
         climberMaster.set(TalonSRXControlMode.PercentOutput, speed);
     }
 
-    public void setFirstPiston(boolean firstPiston) {
+    public void setBigPiston(boolean firstPiston) {
         firstTraversalPiston.set(firstPiston);
     }
-    public void setSecondPiston(boolean secondPiston) {
+    public void setSmallPiston(boolean secondPiston) {
         secondTraversalPiston.set(secondPiston);
     }
-
 }

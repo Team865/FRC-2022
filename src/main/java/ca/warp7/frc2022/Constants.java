@@ -73,14 +73,14 @@ public final class Constants {
 
     // kLobber controls shooter speed
     public static final double kLobberRPS = 25.5;
-    public static final double kShooterRPS = 60.0;
+    public static final double kShooterRPS = 65.0; //60 is good
 
     public static final double kLauncherTicksPerRotation = 2048.0;
     public static final double kLauncherVelocityFrequency = 0.1;
     public static final double kLauncherGearRatio = 1;
 
     // Tuning for the launcher's PID
-    public static final double kLauncherP = 0.0;
+    public static final double kLauncherP = 0.001;
     public static final double kLauncherI = 0.0;
     public static final double kLauncherD = 0.0;
     // This one kinda works like a RPS to voltage ratio.

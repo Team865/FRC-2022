@@ -14,17 +14,18 @@ import ca.warp7.frc2022.subsystems.LauncherInterface;
 public class FeedCommand  extends CommandBase{
     private Intake intake = Intake.getInstance();
     private Elevator elevator = Elevator.getInstance();
-    private LauncherInterface launcher = Launcher.getInstance();
     private double pTime = -1.0;
     double speedWithoutIntake;
-    double speedWithIntake;
+    double manualSpeedWithIntake;
+    double autoSpeedWithIntake;
+    double finalSpeedWithIntake;
 
     private DoubleSupplier speedSupplier;
     private DoubleSupplier speedWithIntakeSupplier;
 
     public FeedCommand(DoubleSupplier speedSupplier, DoubleSupplier speedWithIntakeSupplier) {
         this.speedSupplier = speedSupplier;
-        this.speedWithIntake = speedWithIntake;
+        this.speedWithIntakeSupplier = speedWithIntakeSupplier;
         addRequirements(elevator);
     }
 
@@ -41,32 +42,39 @@ public class FeedCommand  extends CommandBase{
         double feedSpeedWithIntake = speedWithIntakeSupplier.getAsDouble();
         double time = Timer.getFPGATimestamp();
 
-        speedWithoutIntake = 0.5 * feedSpeed;
-        speedWithIntake = 0.5 * feedSpeedWithIntake;
+        speedWithoutIntake = 0.3 * feedSpeed;
+        manualSpeedWithIntake = 0.3 * feedSpeedWithIntake;
 
         if (lowBeamBreak && !highBeamBreak) {
-            speedWithIntake = 0.3;
+            autoSpeedWithIntake = 0.3;
             pTime = time;
         }
 
         if (highBeamBreak) {
-            if (time - pTime < 0.40 && pTime >= 0) {
-                speedWithIntake = 0.2;
+            if (time - pTime < 0.3 && pTime >= 0) {
+                autoSpeedWithIntake = 0.3;
             } else {
-                speedWithIntake = 0.0;
+                autoSpeedWithIntake = 0.0;
             }
         }
 
-        if (Math.abs(speedWithoutIntake) > speedWithIntake) {
-            elevator.setSpeed(speedWithoutIntake);
-        } else if (speedWithIntake > Math.abs(speedWithoutIntake)) {
-            elevator.setSpeed(speedWithIntake);
-            intake.setSpeedFromElevator(speedWithIntake);      
+        if (autoSpeedWithIntake > Math.abs(manualSpeedWithIntake)) {
+            finalSpeedWithIntake = autoSpeedWithIntake;
+        } else if (autoSpeedWithIntake < Math.abs(manualSpeedWithIntake)) {
+            finalSpeedWithIntake = manualSpeedWithIntake;
         } else {
-            elevator.setSpeed(0.0);
-            intake.setSpeedFromElevator(0.0);
+            finalSpeedWithIntake = 0;
         }
-            
+
+        if (Math.abs(finalSpeedWithIntake) >= Math.abs(speedWithoutIntake)) {
+            elevator.setSpeed(finalSpeedWithIntake);
+            intake.setSpeedFromElevator(finalSpeedWithIntake);
+        } else if (Math.abs(finalSpeedWithIntake) < Math.abs(speedWithoutIntake)) {
+            elevator.setSpeed(speedWithoutIntake);
+        } else {
+            elevator.setSpeed(0);
+            intake.setSpeedFromElevator(0);
+        }            
     }
 
     @Override

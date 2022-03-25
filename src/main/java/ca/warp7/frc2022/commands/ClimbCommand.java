@@ -2,6 +2,7 @@ package ca.warp7.frc2022.commands;
 
 import ca.warp7.frc2022.subsystems.Climber;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
@@ -19,13 +20,11 @@ public class ClimbCommand extends CommandBase {
         addRequirements(climber);
     }
 
-
-
     @Override
     public void execute() {
         climber.setSpeed(speedSupplier.getAsDouble());
-        climber.setFirstPiston(firstPiston.getAsBoolean());
-        climber.setSecondPiston(secondPiston.getAsBoolean());
+        climber.setBigPiston(firstPiston.getAsBoolean());
+        climber.setSmallPiston(secondPiston.getAsBoolean());
     }
 }
 

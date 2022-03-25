@@ -24,6 +24,10 @@ public class IntakingCommand extends CommandBase{
         return new IntakingCommand(() -> 0.0);
     }
 
+    public static IntakingCommand autoPower() {
+        return new IntakingCommand(() -> 0.6);
+    }
+
     @Override
     public void initialize() {
     }

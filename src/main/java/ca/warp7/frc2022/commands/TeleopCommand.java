@@ -74,12 +74,6 @@ public class TeleopCommand extends CommandBase {
         return 0.0;
     }
 
-    public double getFeedSpeedWithIntake() {
-        if (isFeedingWithIntake)
-            return Util.applyDeadband(driver.leftTrigger, 0.2) * (isReversed ? -1 : 1);
-        return 0.0;
-    }
-
     private double getXSpeed() {
         return Util.applyDeadband(driver.leftY / -1, 0.2);
     }
@@ -104,14 +98,21 @@ public class TeleopCommand extends CommandBase {
 
     private double getFeedSpeed() {
         if (isFeeding)
-            return Util.applyDeadband(operator.rightTrigger, 0.2) * (isReversed ? -1 : 1);
+            return 1;
+        return 0.0;
+    }
+
+
+    public double getFeedSpeedWithIntake() {
+        if (isFeedingWithIntake)
+            return 1;
         return 0.0;
     }
 
 
     private double getClimbSpeed() {
         SmartDashboard.putBoolean("Match climb configuration", !isClimbing);
-        double climbSpeed = Math.abs(Util.applyDeadband(operator.leftY, 0.4));
+        double climbSpeed = Util.applyDeadband(operator.leftY, 0.4);
         
         if (isClimbing) {
             return climbSpeed;
@@ -164,15 +165,9 @@ public class TeleopCommand extends CommandBase {
         // Driver
 
         if (!isIntaking) {
+            isIntaking = driver.rightTrigger > 0.22;
+        } else {
             isIntaking = driver.rightTrigger > 0.2;
-        } else {
-            isIntaking = false;
-        }
-
-        if (!isFeedingWithIntake) {
-            isFeedingWithIntake = driver.leftTrigger > 0.2;
-        } else {
-            isFeedingWithIntake = false;
         }
 
         if (driver.yButton.isPressed()) {
@@ -198,14 +193,24 @@ public class TeleopCommand extends CommandBase {
             secondSolenoidOpen = !secondSolenoidOpen;
         }
 
-        if (!isFeeding) {
-            isFeeding = operator.rightTrigger > 0.2;
+        if (operator.rightTrigger > 0.22) {
+            isFeeding = true;
         } else {
             isFeeding = false;
+        }
+
+        if (operator.leftTrigger > 0.22) {
+            isFeedingWithIntake = true;
+        } else {
+            isFeedingWithIntake = false;
         }
 
         if (operator.startButton.isPressed()) {
             isClimbing = !isClimbing;
         }
+
+        // if (operator.xButton.isPressed()) {
+        //     SingleFunctionCommand.complexClimb();
+        // }
     }
 }
