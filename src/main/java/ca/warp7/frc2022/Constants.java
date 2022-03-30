@@ -35,9 +35,12 @@ public final class Constants {
 
     public static final int kDriveLeftMasterID = 31;
     public static final int kDriveLeftFollowerID = 32;
+    public static final int kDriveLeftSecondFollowerID = 33;
 
     public static final int kDriveRightMasterID = 21;
     public static final int kDriveRightFollowerID = 22;
+    public static final int kDriveRightSecondFollowerID = 23;
+
 
     public static final int kClimbMasterID = 41;
     public static final int kClimbFollowerID = 42;
@@ -92,16 +95,16 @@ public final class Constants {
     public static final double kHighGearRampRate = 0.3;
 
     public static final PID kAutonLowGearVelocityPID =
-            new PID(0.2, 0.0, 0.0, 0.0);
+        new PID(0.2, 0.0, 0.0, 0.0);
     public static final PID kTeleopLowGearVelocityPID =
-            new PID(0.0, 0.0, 0.0, 0.0);
+        new PID(0.0, 0.0, 0.0, 0.0);
     public static final PID kTeleopHighGearVelocityPID =
-            new PID(0.0, 0.0, 0.0, 0.0);
+        new PID(0.0, 0.0, 0.0, 0.0);
     public static final PID kVisionAlignmentYawPID =
-            new PID(0.025, 0.0, 0.002, 0.0);
+        new PID(0.025, 0.0, 0.002, 0.0);
     // units: degrees => percent
     public static final PID kQuickTurnPID =
-            new PID(0.04, 0.0, 0.0, 0.0);
+        new PID(0.04, 0.0, 0.0, 0.0);
 
 
     // Drive Train Constants
@@ -110,32 +113,19 @@ public final class Constants {
     public static final double kWheelRadius = 0.0760858711932102; // metres
     public static final double kMaxVoltage = 12.0; // volts
 
-    public static class LowGear {
-        public static final double kGearRatio = 9.47;
 
-        public static final double kMetresPerRotation =
-                (2 * Math.PI * kWheelRadius) / kGearRatio; // ticks/m
+    public static final double kGearRatio = 9.47;
+    public static final double kMetresPerRotation =
+        (2 * Math.PI * kWheelRadius) / kGearRatio; // ticks/m
+    public static final SimpleMotorFeedforward kTransmission =
+        new SimpleMotorFeedforward(0.0353, 4.140, 0.401);
 
-        public static final SimpleMotorFeedforward kTransmission =
-                new SimpleMotorFeedforward(0.0353, 4.140, 0.401);
-
-    }
-
-    public static class HighGear {
-        public static final double kGearRatio = 42.0 / 10.0 * 50.0 / 24.0; // 8.75
-
-        public static final double kMetresPerRotation =
-                (2 * Math.PI * kWheelRadius) / kGearRatio; // m/rotation
-
-        public static final SimpleMotorFeedforward kTransmission =
-                new SimpleMotorFeedforward(0.218, 2.01, 0.307);
-    }
-
+    
     @SuppressWarnings("unused")
     private static class PracticeRobotDetector {
         private static final String kPracticeRobotAddress = "00-80-2F-27-06-8E";
         private static final boolean kIsPracticeRobot =
-                NetworkUtil.getMACAddress().equals(kPracticeRobotAddress);
+        NetworkUtil.getMACAddress().equals(kPracticeRobotAddress);
     }
 
     public static boolean isPracticeRobot() {

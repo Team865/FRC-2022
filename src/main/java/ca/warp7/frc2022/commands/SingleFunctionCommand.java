@@ -13,15 +13,6 @@ import static ca.warp7.frc2022.Constants.*;
 
 @SuppressWarnings("unused")
 public class SingleFunctionCommand {
-    public static Command getSetDriveHighGear() {
-        DriveTrain driveTrain = DriveTrain.getInstance();
-        return new InstantCommand(() -> {
-            driveTrain.configureRampRate(kHighGearRampRate);
-            driveTrain.configurePID(kTeleopHighGearVelocityPID);
-            driveTrain.setHighGear(true);
-        });
-    }
-
     public static Command setLauncherHigh() {
         LauncherInterface launcher = Launcher.getInstance();
 
@@ -67,15 +58,6 @@ public class SingleFunctionCommand {
 
     }
 
-    public static Command getSetDriveLowGear() {
-        DriveTrain driveTrain = DriveTrain.getInstance();
-        return new InstantCommand(() -> {
-            driveTrain.configureRampRate(kLowGearRampRate);
-            driveTrain.configurePID(kTeleopLowGearVelocityPID);
-            driveTrain.setHighGear(false);
-        });
-    }
-
     /**
      * Resets the drive train for auto driving. Make sure to call
      * at the start of all routines!
@@ -86,7 +68,6 @@ public class SingleFunctionCommand {
             driveTrain.neutralOutput();
             driveTrain.configureRampRate(kLowGearRampRate);
             driveTrain.configurePID(kAutonLowGearVelocityPID);
-            driveTrain.setHighGear(false);
             driveTrain.setBrake();
             driveTrain.setEncoderPosition(0, 0);
             driveTrain.setRobotState(new Pose2d());

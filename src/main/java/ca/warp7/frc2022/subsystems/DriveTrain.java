@@ -73,30 +73,10 @@ public final class DriveTrain implements Subsystem {
     }
 
     /**
-     * @return isHighGear
-     */
-    public boolean isHighGear() {
-        return isHighGear;
-    }
-
-    /**
-     * Set the high gear state. If different than current state,
-     * shifter is applied the new state, otherwise do nothing
-     *
-     * @param highGear whether to go high gear
-     */
-    public void setHighGear(boolean highGear) {
-        if (highGear != isHighGear) {
-            isHighGear = highGear;
-            shifterSolenoid.set(highGear);
-        }
-    }
-
-    /**
      * @return the transmission feed forward calculator for high or low gear
      */
     public SimpleMotorFeedforward getTransmission() {
-        return isHighGear ? HighGear.kTransmission : LowGear.kTransmission;
+        return kTransmission;
     }
 
     /**
@@ -128,7 +108,7 @@ public final class DriveTrain implements Subsystem {
      * wheel travel based on high or low gear
      */
     public double getMetresPerRotation() {
-        return isHighGear ? HighGear.kMetresPerRotation : LowGear.kMetresPerRotation;
+        return kMetresPerRotation;
     }
 
     /**

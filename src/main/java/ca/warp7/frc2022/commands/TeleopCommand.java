@@ -40,8 +40,6 @@ public class TeleopCommand extends CommandBase {
 
     private Command resetRobotStateCommand = new RobotStateCommand();
 
-    private Command setLowGearDriveCommand = SingleFunctionCommand.getSetDriveLowGear();
-    private Command setHighGearDriveCommand = SingleFunctionCommand.getSetDriveHighGear();
     private Command zeroYawCommand = SingleFunctionCommand.getZeroYaw();
     private Command brakeCommand = SingleFunctionCommand.getSetDriveBrakeMode();
 
@@ -147,7 +145,6 @@ public class TeleopCommand extends CommandBase {
         zeroYawCommand.schedule();
         resetRobotStateCommand.schedule();
 
-        setLowGearDriveCommand.schedule();
         curvatureDriveCommand.schedule();
         brakeCommand.schedule();
 
