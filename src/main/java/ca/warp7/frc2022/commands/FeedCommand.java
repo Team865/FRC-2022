@@ -45,18 +45,18 @@ public class FeedCommand  extends CommandBase{
         speedWithoutIntake = 0.3 * feedSpeed;
         manualSpeedWithIntake = 0.3 * feedSpeedWithIntake;
 
-        if (lowBeamBreak && !highBeamBreak) {
-            autoSpeedWithIntake = 0.3;
-            pTime = time;
-        }
+        // if (lowBeamBreak && !highBeamBreak) {
+        //     autoSpeedWithIntake = 0.3;
+        //     pTime = time;
+        // }
 
-        if (highBeamBreak) {
-            if (time - pTime < 0.3 && pTime >= 0) {
-                autoSpeedWithIntake = 0.3;
-            } else {
-                autoSpeedWithIntake = 0.0;
-            }
-        }
+        // if (highBeamBreak) {
+        //     if (time - pTime < 0.3 && pTime >= 0) {
+        //         autoSpeedWithIntake = 0.3;
+        //     } else {
+        //         autoSpeedWithIntake = 0.0;
+        //     }
+        // }
 
         if (autoSpeedWithIntake > Math.abs(manualSpeedWithIntake)) {
             finalSpeedWithIntake = autoSpeedWithIntake;
