@@ -37,6 +37,7 @@ public class Launcher  implements LauncherInterface{
         voltageCalculator = new PIDController(new PID(kLauncherP, kLauncherI, kLauncherD, kLauncherF));
 
         launcherMotorMaster = MotorControlHelper.createMasterTalonFX(kLauncherMasterID);
+        launcherMotorMaster.setInverted(true);
         launcherMotorFollower = MotorControlHelper.assignFollowerTalonFX(launcherMotorMaster, kLauncherFollowerID, InvertType.OpposeMaster);
 
         launcherMotorMaster.setNeutralMode(NeutralMode.Coast);

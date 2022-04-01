@@ -94,7 +94,7 @@ public class TeleopCommand extends CommandBase {
         return getXSpeed() / 2.0;
     }
 
-    private double getFeedSpeed() {
+    private double getFeedSpeed() { //urmom
         if (isFeeding)
             return 1;
         return 0.0;
@@ -103,8 +103,8 @@ public class TeleopCommand extends CommandBase {
 
     public double getFeedSpeedWithIntake() {
         if (isFeedingWithIntake)
-            return 1;
-        return 0.0;
+            return 1;//swarney sucks no i dont whyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+        return 0.0;//daniel is carrying this team, daniel fan club is being created in your honor
     }
 
 

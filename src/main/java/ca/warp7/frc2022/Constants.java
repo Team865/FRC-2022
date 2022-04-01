@@ -42,8 +42,7 @@ public final class Constants {
     public static final int kDriveRightSecondFollowerID = 23;
 
 
-    public static final int kClimbMasterID = 41;
-    public static final int kClimbFollowerID = 42;
+    public static final int kClimbID = 41;
 
     public static final int kElevatorID = 51;
 
@@ -55,7 +54,7 @@ public final class Constants {
 
     //public static final int kControlPanelManipulatorID = -1;
 
-    // PH ID
+    // Pneumatic IDs
     public static final int kIntakePistonID = 1;
     public static final int kFirstPistonsID = 0;
     public static final int kSecondPistonsID = 2;
@@ -64,6 +63,9 @@ public final class Constants {
 
     public static final int kBeamBreakLowID = 1;
     public static final int kBeamBreakHighID = 2;
+
+    // Elevator feed speed during auto
+    public static final double kAutoFeedSpeed = 0.3;
 
     // Elevator Tuning
     public static final double kElevatorSpeed = 0.20;
@@ -76,7 +78,7 @@ public final class Constants {
 
     // kLobber controls shooter speed
     public static final double kLobberRPS = 25.5;
-    public static final double kShooterRPS = 65.0; //60 is good
+    public static final double kShooterRPS = 72.5;
 
     public static final double kLauncherTicksPerRotation = 2048.0;
     public static final double kLauncherVelocityFrequency = 0.1;
@@ -91,7 +93,7 @@ public final class Constants {
 
     // Drive Train Tuning
 
-    public static final double kLowGearRampRate = 0.15;
+    public static final double kLowGearRampRate = 0.20;
     public static final double kHighGearRampRate = 0.3;
 
     public static final PID kAutonLowGearVelocityPID =
