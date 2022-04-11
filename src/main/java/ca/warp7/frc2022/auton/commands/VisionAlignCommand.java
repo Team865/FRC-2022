@@ -31,21 +31,21 @@ public class VisionAlignCommand extends CommandBase {
 
     @Override
     public void execute() {
-        // double speed = forwardSpeedSupplier.getAsDouble();
+        double speed = forwardSpeedSupplier.getAsDouble();
 
-        // Double smoothHorizontalAngle = limelight.getSmoothHorizontalAngle();
-        // if (smoothHorizontalAngle != null) {
-        //     double ff = driveTrain.getTransmission().ks / (kMaxVoltage);
+        Double smoothHorizontalAngle = limelight.getSmoothHorizontalAngle();
+        if (smoothHorizontalAngle != null) {
+            double ff = driveTrain.getTransmission().ks / (kMaxVoltage);
 
-        //     double correction = pidController.calculate(0, smoothHorizontalAngle);
-        //     double left = speed - correction;
-        //     double right = speed + correction;
+            double correction = pidController.calculate(0, smoothHorizontalAngle);
+            double left = speed - correction;
+            double right = speed + correction;
 
-        //     driveTrain.setPercentOutput(
-        //             Math.copySign(ff, left) + left,
-        //             Math.copySign(ff, right) + right
-        //     );
-        // } else
-        //     driveTrain.setPercentOutput(speed, speed);
+            driveTrain.setPercentOutput(
+                    Math.copySign(ff, left) + left,
+                    Math.copySign(ff, right) + right
+            );
+        } else
+            driveTrain.setPercentOutput(speed, speed);
     }
 }

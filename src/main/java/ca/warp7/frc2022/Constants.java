@@ -63,6 +63,7 @@ public final class Constants {
 
     public static final int kBeamBreakLowID = 1;
     public static final int kBeamBreakHighID = 2;
+    public static final int kLimitSwitchID = 5;
 
     // Elevator feed speed during auto
     public static final double kAutoFeedSpeed = 0.3;
@@ -76,20 +77,29 @@ public final class Constants {
     // Launcher Tuning
     public static final boolean kIsLauncherLobber = true;
 
-    // kLobber controls shooter speed
-    public static final double kLobberRPS = 25.5;
-    public static final double kShooterRPS = 72.5;
+    // Climber Tuning
+    public static final double kClimberTicksPerRotation = 2048.0;
+    public static final double kClimberGearRatio = 9;
+    public static final double kClimberMax = 82.5;
+    public static final double kClimberMin = -2.5; // Under 0 to account for rope tension.
+    public static final double kClimberRung = 10.2;
+    public static final double kTravelFromRungToMax = 84;
+
+
+    // kLobber controls shooter speed. Shooter no longer has manual speed control.
+    // public static final double kLobberRPS = 25.5;
+    // public static double kShooterRPS = 70;
 
     public static final double kLauncherTicksPerRotation = 2048.0;
     public static final double kLauncherVelocityFrequency = 0.1;
     public static final double kLauncherGearRatio = 1;
 
     // Tuning for the launcher's PID
-    public static final double kLauncherP = 0.001;
+    public static final double kLauncherP = 0.0;
     public static final double kLauncherI = 0.0;
     public static final double kLauncherD = 0.0;
     // This one kinda works like a RPS to voltage ratio.
-    public static final double kLauncherF = 0.0095;
+    public static final double kLauncherF = 0.00927;
 
     // Drive Train Tuning
 
@@ -103,7 +113,7 @@ public final class Constants {
     public static final PID kTeleopHighGearVelocityPID =
         new PID(0.0, 0.0, 0.0, 0.0);
     public static final PID kVisionAlignmentYawPID =
-        new PID(0.025, 0.0, 0.002, 0.0);
+        new PID(0.005, 0.0, 0.001, 0.0);
     // units: degrees => percent
     public static final PID kQuickTurnPID =
         new PID(0.04, 0.0, 0.0, 0.0);

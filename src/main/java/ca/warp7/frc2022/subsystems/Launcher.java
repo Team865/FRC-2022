@@ -21,6 +21,9 @@ public class Launcher  implements LauncherInterface{
     private double outputVoltPercent;
     private static TalonFX launcherMotorMaster;
     private static TalonFX launcherMotorFollower;
+    private double limelightShooterRPS;
+
+    private Limelight limelight = Limelight.getInstance();
 
 
     public static LauncherInterface getInstance() {
@@ -52,6 +55,7 @@ public class Launcher  implements LauncherInterface{
         //Note: .getSelectedSensorVelocity returns in ticks per miliseconds.
         currentRPS = launcherMotorMaster.getSelectedSensorVelocity() 
             / kLauncherTicksPerRotation / kLauncherVelocityFrequency * kLauncherGearRatio;
+        this.updateShooterSpeedFromLimelight();
         this.updateTargetRPS();
         this.updateVoltage();
         this.updateHighGoal();
@@ -87,16 +91,18 @@ public class Launcher  implements LauncherInterface{
     }
 
     private void updateHighGoal() {
-        if(highGoal){
-            fullSpeedRPS = kShooterRPS;
-        }
-        else{
-            fullSpeedRPS = kLobberRPS;
-        }
+        fullSpeedRPS = limelightShooterRPS;
     }
 
     private void updateTargetRPS(){
         targetRPS = runLauncher ? fullSpeedRPS : 0.0;
+    }
+
+    /**
+     *  Updates shooter speed from limelight
+     */
+    private void updateShooterSpeedFromLimelight() {
+        limelightShooterRPS = limelight.calculateBestRPS();
     }
 
     private double getPercentError() {

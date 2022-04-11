@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 public class LazySolenoid {
     private Solenoid solenoid;
     private boolean enabled;
-    private boolean on = false;
+    private boolean on;
 
     public LazySolenoid(int channel, boolean enabled) {
         this.enabled = enabled;

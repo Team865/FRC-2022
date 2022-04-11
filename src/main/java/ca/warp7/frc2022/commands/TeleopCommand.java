@@ -7,11 +7,14 @@
 
 package ca.warp7.frc2022.commands;
 
+import javax.crypto.spec.PSource.PSpecified;
+
 import ca.warp7.frc2022.Constants;
 import ca.warp7.frc2022.auton.commands.RobotStateCommand;
 import ca.warp7.frc2022.auton.commands.VisionAlignCommand;
 import ca.warp7.frc2022.lib.Util;
 import ca.warp7.frc2022.lib.XboxController;
+import ca.warp7.frc2022.subsystems.Climber;
 import ca.warp7.frc2022.subsystems.Launcher;
 import ca.warp7.frc2022.subsystems.LauncherInterface;
 import ca.warp7.frc2022.subsystems.Limelight;
@@ -34,16 +37,20 @@ public class TeleopCommand extends CommandBase {
 
     private Command intakeCommand = new IntakingCommand(this::getIntakeSpeed);
     private Command feedCommand = new FeedCommand(this::getFeedSpeed, this::getFeedSpeedWithIntake);
-    private Command climbCommand = new ClimbCommand(this::getClimbSpeed, this::getFirstPiston, this::getSecondPiston);
+    private Command climbCommand = new ClimbCommand(this::getClimbSpeed);
+    private Command visionAlignCommand = new VisionAlignCommand(this::getVisionAlignSpeed);
+    private Limelight limelight = Limelight.getInstance();
+
 
     //    private Command controlPanelDisplay = new ControlPanelCommand(this::getControlPanelSpinnerSpeed);
 
     private Command resetRobotStateCommand = new RobotStateCommand();
-
+    private Command complexClimbMacro = new ComplexClimbMacro();
     private Command zeroYawCommand = SingleFunctionCommand.getZeroYaw();
     private Command brakeCommand = SingleFunctionCommand.getSetDriveBrakeMode();
 
     private LauncherInterface launcher = Launcher.getInstance();
+    private Climber climber = Climber.getInstance();
 
     private XboxController driver = new XboxController(0);
     private XboxController operator = new XboxController(1);
@@ -55,11 +62,8 @@ public class TeleopCommand extends CommandBase {
     private boolean isPriming = false;
     private boolean isFeeding = false;
     private boolean isFeedingWithIntake = false;
-    private boolean isHighGoal = false;
     private boolean isLaunching = false;
     private boolean isClimbing = false;
-    private boolean firstSolenoidOpen = false;
-    private boolean secondSolenoidOpen = false;
 
 //    public double getControlPanelSpinnerSpeed() {
 //        return operator.rightX;
@@ -110,36 +114,20 @@ public class TeleopCommand extends CommandBase {
 
     private double getClimbSpeed() {
         SmartDashboard.putBoolean("Match climb configuration", !isClimbing);
-        double climbSpeed = Util.applyDeadband(operator.leftY, 0.4);
+        double climbSpeed = Util.applyDeadband(operator.leftY, 0.2) * 0.5;
         
-        if (isClimbing) {
-            return climbSpeed;
-        } else if (!isClimbing) {
-            return climbSpeed * -1;
-        } else {
-            return 0;
-        }
-    }
-
-    private boolean getFirstPiston() {
-        return firstSolenoidOpen;
-    }
-
-    private boolean getSecondPiston() {
-        return secondSolenoidOpen;
+        return -climbSpeed;
     }
 
     private boolean isLaunching() {
         return isLaunching;
     }
 
-    private boolean isHighGoal() {
-        return isHighGoal;
-    }
 
     @Override
     public void initialize() {
         launcher.reset();
+        climber.resetClimberPosition();
         Limelight.getInstance().setPipeline(0);
 
         zeroYawCommand.schedule();
@@ -158,8 +146,9 @@ public class TeleopCommand extends CommandBase {
         driver.collectControllerData();
         operator.collectControllerData();
         launcher.setRunLauncher(this.isLaunching());
-        launcher.isHighGoal(this.isHighGoal());
         // Driver
+
+  
 
         if (!isIntaking) {
             isIntaking = driver.rightTrigger > 0.22;
@@ -171,11 +160,16 @@ public class TeleopCommand extends CommandBase {
             isReversed = !isReversed;
         }
 
+        if (driver.aButton.isPressed()) {
+            visionAlignCommand.schedule();
+        } else if (driver.aButton.isReleased()) {
+            visionAlignCommand.cancel();
+            curvatureDriveCommand.schedule();
+        }
+
         // Operator
 
-        if (operator.yButton.isPressed()) {
-            isHighGoal = !isHighGoal;
-        }
+
 
         if (operator.rightBumper.isPressed()) {
             launcher.reset();
@@ -183,11 +177,11 @@ public class TeleopCommand extends CommandBase {
         }
 
         if (operator.bButton.isPressed()) {
-            firstSolenoidOpen = !firstSolenoidOpen;
+            SingleFunctionCommand.toggleBigPiston().schedule();;
         }
 
         if (operator.aButton.isPressed()) {
-            secondSolenoidOpen = !secondSolenoidOpen;
+            SingleFunctionCommand.toggleSmallPiston().schedule();;
         }
 
         if (operator.rightTrigger > 0.22) {
@@ -203,8 +197,12 @@ public class TeleopCommand extends CommandBase {
         }
 
         if (operator.startButton.isPressed()) {
-            isClimbing = !isClimbing;
+            SingleFunctionCommand.toggleClimberOveride().schedule();
         }
+        if(operator.backButton.isPressed()) {
+            complexClimbMacro.schedule();
+        }
+
 
         // if (operator.xButton.isPressed()) {
         //     SingleFunctionCommand.complexClimb();

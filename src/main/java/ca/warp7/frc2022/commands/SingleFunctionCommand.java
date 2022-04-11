@@ -3,6 +3,7 @@ package ca.warp7.frc2022.commands;
 import ca.warp7.frc2022.subsystems.*;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -106,38 +107,28 @@ public class SingleFunctionCommand {
         return new InstantCommand(infrastructure::stopCompressor);
     }
 
-    public static Command setBigPistonIn() {
-        Climber climber = Climber.getInstance();
-        return new InstantCommand(() -> climber.setBigPiston(false));
-    }
-
-    public static Command setBigPistonOut() {
-        Climber climber = Climber.getInstance();
-        return new InstantCommand(() -> climber.setBigPiston(true));
-    }
-
-    public static Command setClimberSpeedForClimb() {
-        Climber climber = Climber.getInstance();
-        return new InstantCommand(() -> climber.setSpeed(-0.4));
-    }
-
-    public static Command resetClimberSpeedForClimb() {
-        Climber climber = Climber.getInstance();
-        return new InstantCommand(() -> climber.setSpeed(0.0));
-    }
-
-
-    public static Command complexClimb() {
+    public static Command toggleBigPiston() {
         Climber climber = Climber.getInstance();
 
-        return new SequentialCommandGroup(   
-            SingleFunctionCommand.setBigPistonIn(),
-            new WaitCommand(0.5),
-            SingleFunctionCommand.setClimberSpeedForClimb(),
-            new WaitCommand(0.5),
-            SingleFunctionCommand.resetClimberSpeedForClimb(),
-            SingleFunctionCommand.setBigPistonOut()
-        );
+        return new InstantCommand(() -> climber.toggleBigPiston());
     }
+
+    public static Command toggleSmallPiston() {
+        Climber climber = Climber.getInstance();
+
+        return new InstantCommand(() -> climber.toggleSmallPiston());
+    }
+
+    public static Command toggleClimberOveride() {
+        Climber climber = Climber.getInstance();
+        return new InstantCommand(() -> climber.toggleLimitOveride());
+    }
+
+    public static Command setClimberToBar() {
+        Climber climber = Climber.getInstance();
+
+        return new InstantCommand(() -> climber.setClimberToPosition(kClimberRung));
+    }
+
 }
 // Fingers locked on bar -> Actuate Big -> Extend hooks -> Actuate Big in ~3in -> Pull down on hooks until they engage -> Actuate Big out -> Release fingers -> Pull up with hooks
