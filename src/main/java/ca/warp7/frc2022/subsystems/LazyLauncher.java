@@ -36,4 +36,11 @@ public class LazyLauncher implements LauncherInterface {
     @Override
     public void isHighGoal(boolean isHighGoal) {
     }
+
+    public void toggleUseLimelightSpeed(){
+        
+    }
+
+    public void setUseAutoSpeed(boolean use){
+    }
 }

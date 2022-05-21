@@ -130,7 +130,9 @@ public final class Constants {
     public static final double kMetresPerRotation =
         (2 * Math.PI * kWheelRadius) / kGearRatio; // ticks/m
     public static final SimpleMotorFeedforward kTransmission =
-        new SimpleMotorFeedforward(0.0353, 4.140, 0.401);
+        //new SimpleMotorFeedforward(0.68, 2.01, 0.26);
+        new SimpleMotorFeedforward(0.0353, 2.0634, 0.30254);
+
 
     
     @SuppressWarnings("unused")

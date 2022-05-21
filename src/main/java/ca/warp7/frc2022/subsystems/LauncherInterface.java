@@ -13,4 +13,8 @@ public interface LauncherInterface extends Subsystem {
     public double getPercentPower();
 
     public void reset();
+
+    public void toggleUseLimelightSpeed();
+
+    public void setUseAutoSpeed(boolean use);
 }

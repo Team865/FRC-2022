@@ -130,5 +130,28 @@ public class SingleFunctionCommand {
         return new InstantCommand(() -> climber.setClimberToPosition(kClimberRung));
     }
 
+    public static Command limitSwitchTimeout(double delay) {
+        Climber climber = Climber.getInstance();
+
+        return new SequentialCommandGroup(
+            new InstantCommand(() -> climber.setDisableLimitSwitch(true)),
+            new WaitCommand(delay),
+            new InstantCommand(() -> climber.setDisableLimitSwitch(false))
+        );
+    }
+
+
+    public static Command toggleUseLimelightSpeed() {
+        LauncherInterface launcher = Launcher.getInstance();
+        
+        return new InstantCommand(launcher::toggleUseLimelightSpeed);
+    }
+
+    public static Command setUseAutoSpeed(boolean use) {
+        LauncherInterface launcher = Launcher.getInstance();
+        
+        return new InstantCommand(() -> launcher.setUseAutoSpeed(use));
+    }
+
 }
 // Fingers locked on bar -> Actuate Big -> Extend hooks -> Actuate Big in ~3in -> Pull down on hooks until they engage -> Actuate Big out -> Release fingers -> Pull up with hooks

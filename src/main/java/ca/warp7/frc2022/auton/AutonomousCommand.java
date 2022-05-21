@@ -14,7 +14,7 @@ public class AutonomousCommand extends CommandBase {
     public void initialize() {
         Command mode;
 
-        //mode = selector.getSelectedAuto();
-        //mode.schedule();
+        mode = AutonomousMode.shootMoveBack();
+        mode.schedule();
     }
 }

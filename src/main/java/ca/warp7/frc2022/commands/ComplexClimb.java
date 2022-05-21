@@ -36,4 +36,9 @@ public class ComplexClimb{
         double softMax = climber.getSoftMax();
         return new InstantCommand(()-> climber.setClimberToPosition(softMax + set));
     }
+
+    public static Command disableLimitSwitch(boolean disable) {
+        Climber climber = Climber.getInstance();
+        return new InstantCommand(()-> climber.setDisableLimitSwitch(disable));
+    }
 }

@@ -25,6 +25,7 @@ public class Climber implements Subsystem {
     private double oldTarget = 0;
     private double softClimbMin;
     private double softClimbMax;
+    private boolean disableLimitSwitch;
 
     public static Climber getInstance() {
         if (instance == null) instance = new Climber();
@@ -105,9 +106,11 @@ public class Climber implements Subsystem {
     }
     public void setSmallPiston(boolean secondPiston) {
         smallPistonStatus = secondPiston;
-
-
         secondTraversalPiston.set(secondPiston);
+    }
+
+    public void setDisableLimitSwitch(boolean disable) {
+        disableLimitSwitch = disable;
     }
 
     public void setClimberToPosition(double targetPosition) {
@@ -119,6 +122,7 @@ public class Climber implements Subsystem {
     }
 
     public void periodic() {
+        // System.out.println(disableLimitSwitch);
         targetPositionDelta = targetPosition - climberPosition;
         boolean movingUp = false;
         boolean movingDown = false;
@@ -156,7 +160,7 @@ public class Climber implements Subsystem {
             }
         }
 
-        if(limitSwitch.get()) {
+        if(limitSwitch.get() && !disableLimitSwitch) {
             setSmallPiston(false);
             //softClimbMin = climberPosition - 0.5;
             //softClimbMax = softClimbMin + kTravelFromRungToMax + 0.5;

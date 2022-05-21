@@ -5,6 +5,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import ca.warp7.frc2022.Constants;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -55,7 +56,6 @@ public class Limelight implements Subsystem {
                     double latency = this.getLatencySeconds();
 
                     double targetAngle = this.getHorizontalAngle() + angularVelocity * latency;
-                    System.out.println(angularVelocity);
                     if (smoothAngleExists) {
                         smoothHorizontalAngle += angleChange;
                         double smoothing = 0.9;
@@ -72,6 +72,7 @@ public class Limelight implements Subsystem {
         }
         prevEnabled = enabled;
 
+        SmartDashboard.putNumber("Distance from hub", getCameraToTarget());
     }
 
 
@@ -83,7 +84,8 @@ public class Limelight implements Subsystem {
 
 
         // 0.0687 + 53.5x + -8.04x^2
-        return  MathUtil.clamp(72.7 + (-17.9 * distance) + (14.3 * Math.pow(distance, 2)) + (-2.19 * Math.pow(distance, 3)), 0, 95);
+        //return  MathUtil.clamp(73.7 + (-17.9 * distance) + (14.3 * Math.pow(distance, 2)) + (-2.19 * Math.pow(distance, 3)), 0, 100);
+         return  MathUtil.clamp(69.1 + (-9.38 * distance) + (9.43 * Math.pow(distance, 2)) + (-1.33 * Math.pow(distance, 3)), 0, 100);
     }
 
     public void setSmoothHorizontalAngle(Double smoothHorizontalAngle) {

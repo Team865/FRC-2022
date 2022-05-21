@@ -12,14 +12,16 @@ public class ComplexClimbMacro extends SequentialCommandGroup{
 
     public ComplexClimbMacro() {
         addCommands(
+            ComplexClimb.disableLimitSwitch(true),
             ComplexClimb.setSmallPiston(true),
             new WaitCommand(0.5),
             ComplexClimb.setBigPiston(false),
             new WaitCommand(0.4),
             ComplexClimb.setClimbPositionRelativeOfMax(-20),
             new WaitCommand(0.2),
-            ComplexClimb.setBigPiston(true)
-
+            ComplexClimb.setBigPiston(true),
+            new WaitCommand(1),
+            ComplexClimb.disableLimitSwitch(false)
         );
     }
 }

@@ -64,6 +64,7 @@ public class TeleopCommand extends CommandBase {
     private boolean isFeedingWithIntake = false;
     private boolean isLaunching = false;
     private boolean isClimbing = false;
+    private boolean slowMode = false;
 
 //    public double getControlPanelSpinnerSpeed() {
 //        return operator.rightX;
@@ -77,12 +78,17 @@ public class TeleopCommand extends CommandBase {
     }
 
     private double getXSpeed() {
-        return Util.applyDeadband(driver.leftY / -1, 0.2);
+        
+        if(slowMode){
+            return Util.applyDeadband(driver.leftY / -1, 0.2) * 0.1;
+        } else {
+            return Util.applyDeadband(driver.leftY / -1, 0.2);
+        }
     }
 
     private double getZRotation() {
         double zRotation = Util.applyDeadband(driver.rightX, 0.15);
-        if (driver.backButton.isDown()) zRotation *= 0.5;
+        if (slowMode) zRotation *= 0.1;
         if (isQuickTurn() || driver.leftY < 0) {
             return zRotation;
         } else {
@@ -148,7 +154,9 @@ public class TeleopCommand extends CommandBase {
         launcher.setRunLauncher(this.isLaunching());
         // Driver
 
-  
+        if (driver.startButton.isPressed()) {
+            slowMode = !slowMode;
+        }
 
         if (!isIntaking) {
             isIntaking = driver.rightTrigger > 0.22;
@@ -181,7 +189,8 @@ public class TeleopCommand extends CommandBase {
         }
 
         if (operator.aButton.isPressed()) {
-            SingleFunctionCommand.toggleSmallPiston().schedule();;
+            SingleFunctionCommand.limitSwitchTimeout(3).schedule();
+            SingleFunctionCommand.toggleSmallPiston().schedule();
         }
 
         if (operator.rightTrigger > 0.22) {
@@ -201,6 +210,10 @@ public class TeleopCommand extends CommandBase {
         }
         if(operator.backButton.isPressed()) {
             complexClimbMacro.schedule();
+        }
+
+        if(operator.yButton.isPressed()) {
+            SingleFunctionCommand.toggleUseLimelightSpeed().schedule();
         }
 
 

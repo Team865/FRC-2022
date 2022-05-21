@@ -32,17 +32,47 @@ public class AutonomousMode {
         );
     }
 
+    public static Command shoot_taxi() {
+        return new SequentialCommandGroup(
+            SingleFunctionCommand.getResetAutonomousDrive(),
+            new RobotStateCommand(new Pose2d()),
+            getShootCellsCommand(1),
+            AutonomousPath.OneMeterForward()
+        );
+    }
+
     public static Command closestToHanger(){
         return new SequentialCommandGroup(
             SingleFunctionCommand.getResetAutonomousDrive(),
-            new RobotStateCommand(new Pose2d(5, 0 , new Rotation2d())),
-            SingleFunctionCommand.setLauncherHigh(),
+            SingleFunctionCommand.getZeroYaw(),
+            new RobotStateCommand(AutonomousPath.kStarting),
+            SingleFunctionCommand.runIntake(),
+            AutonomousPath.getSingleBall(),
+            SingleFunctionCommand.stopIntake(),
+            AutonomousPath.returnFromSingleBall(),
+            new VisionAlignCommand(() -> 0).withTimeout(0.75),
             SingleFunctionCommand.startLauncher(),
-            new WaitCommand(1.5),
-            getShootCellsCommand(1),
-            SingleFunctionCommand.stopLauncher(),
-            AutonomousPath.moveBack(),
-            QuickTurnCommand.ofFieldOrientedAngle(Rotation2d.fromDegrees(90)).withTimeout(2)
+            new WaitCommand(0.5),
+            getShootCellsCommand(1).withTimeout(0.75),
+            new WaitCommand(0.5),
+            getShootCellsCommand(1).withTimeout(1.25),
+            SingleFunctionCommand.stopLauncher()
+            // AutonomousPath.getOpponentTrechTwoBallsToShoot()
+            // SingleFunctionCommand.startLauncher()
+            // new WaitCommand(0.5),
+            // getShootCellsCommand(1),
+            // SingleFunctionCommand.stopLauncher(),
+            // AutonomousPath.FirstBallLocation()
+
+            // SingleFunctionCommand.getResetAutonomousDrive(),
+            // new RobotStateCommand(new Pose2d(5, 0 , new Rotation2d())),
+            // SingleFunctionCommand.setLauncherHigh(),
+            // SingleFunctionCommand.startLauncher(),
+            // new WaitCommand(1.5),
+            // getShootCellsCommand(1),
+            // SingleFunctionCommand.stopLauncher(),
+            // AutonomousPath.moveBack(),
+            // QuickTurnCommand.ofFieldOrientedAngle(Rotation2d.fromDegrees(90)).withTimeout(2)
 
             // SingleFunctionCommand.getResetAutonomousDrive(),
             // new RobotStateCommand(new Pose2d(5, 0 , new Rotation2d())),
@@ -68,22 +98,23 @@ public class AutonomousMode {
         );
     }
 
-    // public static Command shootMoveBack(){
-    //     return new SequentialCommandGroup(
-    //         SingleFunctionCommand.getResetAutonomousDrive(),
-    //         new RobotStateCommand(new Pose2d(5, 0 , new Rotation2d())),
-    //         new SequentialCommandGroup(
-    //             shootBall(),
-    //             AutonomousPath.moveBack(),
-    //             new IntakingCommand(() -> 0.3).withTimeout(0.25),
-    //             QuickTurnCommand.ofFieldOrientedAngle(Rotation2d.fromDegrees(90)).withTimeout(2),
-    //             //AutonomousPath.grabBall(),
-    //             AutonomousPath.moveBackfromback(),
-    //             QuickTurnCommand.ofFieldOrientedAngle(Rotation2d.fromDegrees(0)),
-    //             new IntakingCommand(() -> 0.0).withTimeout(0.25),
-    //             AutonomousPath.returnFromBall()
+    public static Command shootMoveBack(){
+        return new SequentialCommandGroup(
+            SingleFunctionCommand.getResetAutonomousDrive(),
+            new RobotStateCommand(new Pose2d(3, 0 , new Rotation2d())),
+            new SequentialCommandGroup(
+                SingleFunctionCommand.setUseAutoSpeed(true),
+                SingleFunctionCommand.startLauncher(),
+                new WaitCommand(1),
+                getShootCellsCommand(1).withTimeout(1.25),
+                SingleFunctionCommand.stopLauncher(),
+                new WaitCommand(6),
+                AutonomousPath.moveBack(),
+                SingleFunctionCommand.setUseAutoSpeed(false)
 
-    //         )
-    //     );
-    // }
+            )
+        );
+    }
+
+    
 }
