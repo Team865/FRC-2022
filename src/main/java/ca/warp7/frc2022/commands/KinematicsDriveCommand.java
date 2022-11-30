@@ -102,6 +102,6 @@ public class KinematicsDriveCommand extends CommandBase {
 
 
     private double getMaximumVelocity() {
-        return driveTrain.isHighGear() ? 4.6 : 2.2;
+        return 2.2;
     }
 }

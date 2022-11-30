@@ -5,18 +5,19 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import java.util.function.DoubleSupplier;
 
-public class ClimberSpeedCommand extends CommandBase {
+public class ClimbCommand extends CommandBase {
     private DoubleSupplier speedSupplier;
+
     private Climber climber = Climber.getInstance();
 
-    public ClimberSpeedCommand(DoubleSupplier speedSupplier) {
+    public ClimbCommand(DoubleSupplier speedSupplier) {
         this.speedSupplier = speedSupplier;
         addRequirements(climber);
     }
 
     @Override
     public void execute() {
-            climber.setSpeed(speedSupplier.getAsDouble());
+        climber.setSpeed(speedSupplier.getAsDouble());
     }
 }
 

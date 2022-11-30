@@ -1,6 +1,9 @@
 package ca.warp7.frc2022.subsystems;
 
 import static ca.warp7.frc2022.Constants.*;
+
+import javax.swing.text.StyledEditorKit.BoldAction;
+
 import ca.warp7.frc2022.lib.Util;
 import ca.warp7.frc2022.lib.control.PIDController;
 import ca.warp7.frc2022.lib.control.PID;
@@ -21,6 +24,11 @@ public class Launcher  implements LauncherInterface{
     private double outputVoltPercent;
     private static TalonFX launcherMotorMaster;
     private static TalonFX launcherMotorFollower;
+    private double limelightShooterRPS;
+    private boolean useLimelightSpeed = true;
+    private boolean useAutoSpeed = false;
+
+    private Limelight limelight = Limelight.getInstance();
 
 
     public static LauncherInterface getInstance() {
@@ -37,6 +45,7 @@ public class Launcher  implements LauncherInterface{
         voltageCalculator = new PIDController(new PID(kLauncherP, kLauncherI, kLauncherD, kLauncherF));
 
         launcherMotorMaster = MotorControlHelper.createMasterTalonFX(kLauncherMasterID);
+        launcherMotorMaster.setInverted(true);
         launcherMotorFollower = MotorControlHelper.assignFollowerTalonFX(launcherMotorMaster, kLauncherFollowerID, InvertType.OpposeMaster);
 
         launcherMotorMaster.setNeutralMode(NeutralMode.Coast);
@@ -51,6 +60,7 @@ public class Launcher  implements LauncherInterface{
         //Note: .getSelectedSensorVelocity returns in ticks per miliseconds.
         currentRPS = launcherMotorMaster.getSelectedSensorVelocity() 
             / kLauncherTicksPerRotation / kLauncherVelocityFrequency * kLauncherGearRatio;
+        this.updateShooterSpeedFromLimelight();
         this.updateTargetRPS();
         this.updateVoltage();
         this.updateHighGoal();
@@ -62,6 +72,7 @@ public class Launcher  implements LauncherInterface{
         SmartDashboard.putBoolean("Is launcher running", runLauncher);
         SmartDashboard.putBoolean("Is RPS target reached", this.isTargetReached());
         SmartDashboard.putBoolean("Is shooting high goal", highGoal);
+        SmartDashboard.putBoolean("Use limelight speed", useLimelightSpeed);
     }
 
     //Bad temp documentation note: Epsilon is the allowed decemal error since doubles and floats subtract weird.
@@ -75,6 +86,14 @@ public class Launcher  implements LauncherInterface{
         runLauncher = newRunLauncher;
     }
 
+    public void toggleUseLimelightSpeed() {
+        useLimelightSpeed = !useLimelightSpeed;
+    }
+
+    public void setUseAutoSpeed(boolean use) {
+        useAutoSpeed = use;
+    }
+
     @Override
     public void isHighGoal(boolean isHighGoal) {
         highGoal = isHighGoal;
@@ -86,16 +105,25 @@ public class Launcher  implements LauncherInterface{
     }
 
     private void updateHighGoal() {
-        if(highGoal){
-            fullSpeedRPS = kShooterRPS;
-        }
-        else{
-            fullSpeedRPS = kLobberRPS;
+
+        if(useLimelightSpeed) {
+            fullSpeedRPS = limelightShooterRPS;
+        } else if (useAutoSpeed) {
+            fullSpeedRPS = 80;
+        } else {
+            fullSpeedRPS = 80;
         }
     }
 
     private void updateTargetRPS(){
         targetRPS = runLauncher ? fullSpeedRPS : 0.0;
+    }
+
+    /**
+     *  Updates shooter speed from limelight
+     */
+    private void updateShooterSpeedFromLimelight() {
+        limelightShooterRPS = limelight.calculateBestRPS();
     }
 
     private double getPercentError() {

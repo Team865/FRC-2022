@@ -39,7 +39,7 @@ public class PIDController {
         double kP_gain = pid.kP * error;
 
         if (kP_gain <= minOutput || kP_gain >= maxOutput ||
-                Math.abs(error) < errorEpsilon || kP_gain * sumError < 0) {
+                Math.abs(error) < errorEpsilon) { // || kP_gain * sumError < 0 Breaking shooter
             // Reset sum when the integral gain is not useful
             sumError = 0;
         } else {
@@ -59,8 +59,8 @@ public class PIDController {
         if (Math.abs(error) < errorEpsilon && Math.abs(dError) < dErrorEpsilon) {
             timeInEpsilon += dt;
         } else {
-            timeInEpsilon = 0.0;
-        }
+             timeInEpsilon = 0.0;
+         }
 
         double output = kP_gain + kI_gain + kd_gain;
         return MathUtil.clamp(output, minOutput, maxOutput);

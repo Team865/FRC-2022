@@ -41,7 +41,6 @@ public class XboxController {
 
     public DPad dPad                    = new DPad();
 
-    private DriverStation driverStation = DriverStation.getInstance();
     private boolean unplugReported      = false;
     private int port;
 
@@ -63,11 +62,11 @@ public class XboxController {
      */
     public void collectControllerData() {
 
-        int buttonCount = driverStation.getStickButtonCount(port);
-        int axisCount = driverStation.getStickAxisCount(port);
+        int buttonCount = DriverStation.getStickButtonCount(port);
+        int axisCount = DriverStation.getStickAxisCount(port);
 
         if (buttonCount >= 10 && axisCount > 5) {
-            int buttons      = driverStation    .getStickButtons(port);
+            int buttons      = DriverStation    .getStickButtons(port);
 
             aButton          = aButton          .update((buttons & 1     ) != 0);
             bButton          = bButton          .update((buttons & 1 << 1) != 0);
@@ -83,16 +82,16 @@ public class XboxController {
             leftStickButton  = leftStickButton  .update((buttons & 1 << 8) != 0);
             rightStickButton = rightStickButton .update((buttons & 1 << 9) != 0);
 
-            leftX            = driverStation    .getStickAxis(port, 0);
-            leftY            = driverStation    .getStickAxis(port, 1);
+            leftX            = DriverStation    .getStickAxis(port, 0);
+            leftY            = DriverStation    .getStickAxis(port, 1);
 
-            leftTrigger      = driverStation    .getStickAxis(port, 2);
-            rightTrigger     = driverStation    .getStickAxis(port, 3);
+            leftTrigger      = DriverStation    .getStickAxis(port, 2);
+            rightTrigger     = DriverStation    .getStickAxis(port, 3);
 
-            rightX           = driverStation    .getStickAxis(port, 4);
-            rightY           = driverStation    .getStickAxis(port, 5);
+            rightX           = DriverStation    .getStickAxis(port, 4);
+            rightY           = DriverStation    .getStickAxis(port, 5);
 
-            dPad.value       = driverStation    .getStickPOV(port, 0);
+            dPad.value       = DriverStation    .getStickPOV(port, 0);
 
             unplugReported   = false;
         } else {

@@ -20,22 +20,32 @@ public final class FalconDriveTrainVariant implements DriveTrainVariant {
                     kCurrentLimitTriggerThreshold, kCurrentLimitTriggerTime);
 
     private final TalonFX driveLeftMasterFalcon =
-            MotorControlHelper.createMasterTalonFX(kDriveLeftMasterID);
+        MotorControlHelper.createMasterTalonFX(kDriveLeftMasterID);
     private final TalonFX driveLeftFollowerFalcon =
-            MotorControlHelper.assignFollowerTalonFX(
-                    driveLeftMasterFalcon,
-                    kDriveLeftFollowerID,
-                    InvertType.FollowMaster
-            );
+        MotorControlHelper.assignFollowerTalonFX(
+            driveLeftMasterFalcon,
+            kDriveLeftFollowerID,
+            InvertType.FollowMaster);
+    private final TalonFX driveLeftSecondFollowerFalcon =
+        MotorControlHelper.assignFollowerTalonFX(
+            driveLeftMasterFalcon,
+            kDriveLeftSecondFollowerID,
+            InvertType.FollowMaster
+        );
 
     private final TalonFX driveRightMasterFalcon =
-            MotorControlHelper.createMasterTalonFX(kDriveRightMasterID);
+        MotorControlHelper.createMasterTalonFX(kDriveRightMasterID);
     private final TalonFX driveRightFollowerFalcon =
-            MotorControlHelper.assignFollowerTalonFX(
-                    driveRightMasterFalcon,
-                    kDriveRightFollowerID,
-                    InvertType.FollowMaster
-            );
+        MotorControlHelper.assignFollowerTalonFX(
+            driveRightMasterFalcon,
+            kDriveRightFollowerID,
+            InvertType.FollowMaster);
+    private final TalonFX driveRightSecondFollowerFalcon =
+        MotorControlHelper.assignFollowerTalonFX(
+            driveRightMasterFalcon, 
+            kDriveRightSecondFollowerID, 
+            InvertType.FollowMaster
+        );
 
     public FalconDriveTrainVariant() {
         driveRightMasterFalcon.setInverted(true);
@@ -107,9 +117,12 @@ public final class FalconDriveTrainVariant implements DriveTrainVariant {
     private void setNeutralMode(NeutralMode mode) {
         driveLeftMasterFalcon.setNeutralMode(mode);
         driveLeftFollowerFalcon.setNeutralMode(mode);
+        driveLeftSecondFollowerFalcon.setNeutralMode(mode);
+        
 
         driveRightMasterFalcon.setNeutralMode(mode);
         driveRightFollowerFalcon.setNeutralMode(mode);
+        driveRightSecondFollowerFalcon.setNeutralMode(mode);
     }
 
     @Override

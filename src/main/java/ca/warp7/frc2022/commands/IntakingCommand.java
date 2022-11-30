@@ -1,6 +1,5 @@
 package ca.warp7.frc2022.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import java.util.function.DoubleSupplier;
@@ -22,6 +21,10 @@ public class IntakingCommand extends CommandBase{
 
     public static IntakingCommand neutral() {
         return new IntakingCommand(() -> 0.0);
+    }
+
+    public static IntakingCommand autoPower() {
+        return new IntakingCommand(() -> 0.6);
     }
 
     @Override

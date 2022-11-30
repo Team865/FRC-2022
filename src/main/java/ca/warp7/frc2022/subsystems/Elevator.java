@@ -22,15 +22,23 @@ public class Elevator implements Subsystem {
     private static DigitalInput beamBreakLow = new DigitalInput (kBeamBreakLowID);         
     private static DigitalInput beamBreakHigh = new DigitalInput (kBeamBreakHighID);       
 
-
+    /**
+     * @return status of the low beam break
+     */
     public static boolean getLowBeamBreak() {
         return !beamBreakLow.get();
     }
 
+    /**
+     * @return status of high beam break
+     */
     public static boolean getHighBeamBreak() {
         return !beamBreakHigh.get();
     }
 
+    /**
+     * @param speed Value for elevator output percent
+     */
     public void setSpeed(double speed) {
         elevatorMotor.set(ControlMode.PercentOutput, speed);
     }

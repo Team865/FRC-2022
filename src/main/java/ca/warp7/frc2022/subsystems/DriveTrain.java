@@ -37,7 +37,7 @@ public final class DriveTrain implements Subsystem {
     private static DriveTrainVariant driveTrainVariant;
 
     private final LazySolenoid shifterSolenoid =
-            new LazySolenoid(kDriveShifterID, kEnableSolenoids);
+            new LazySolenoid(4, kEnableSolenoids);
 
     private final AHRS navx = new AHRS(I2C.Port.kMXP);
 
@@ -67,36 +67,16 @@ public final class DriveTrain implements Subsystem {
     public void periodic() {
         updateRobotStateEstimation();
 
-        // SmartDashboard.putNumber("Robot X (m)", robotState.getTranslation().getX());
-        // SmartDashboard.putNumber("Robot Y (m)", robotState.getTranslation().getY());
-        // SmartDashboard.putNumber("Robot Angle (deg)", robotState.getRotation().getDegrees());
-    }
-
-    /**
-     * @return isHighGear
-     */
-    public boolean isHighGear() {
-        return isHighGear;
-    }
-
-    /**
-     * Set the high gear state. If different than current state,
-     * shifter is applied the new state, otherwise do nothing
-     *
-     * @param highGear whether to go high gear
-     */
-    public void setHighGear(boolean highGear) {
-        if (highGear != isHighGear) {
-            isHighGear = highGear;
-            shifterSolenoid.set(highGear);
-        }
+        SmartDashboard.putNumber("Robot X (m)", robotState.getTranslation().getX());
+        SmartDashboard.putNumber("Robot Y (m)", robotState.getTranslation().getY());
+        SmartDashboard.putNumber("Robot Angle (deg)", robotState.getRotation().getDegrees());
     }
 
     /**
      * @return the transmission feed forward calculator for high or low gear
      */
     public SimpleMotorFeedforward getTransmission() {
-        return isHighGear ? HighGear.kTransmission : LowGear.kTransmission;
+        return kTransmission;
     }
 
     /**
@@ -128,7 +108,7 @@ public final class DriveTrain implements Subsystem {
      * wheel travel based on high or low gear
      */
     public double getMetresPerRotation() {
-        return isHighGear ? HighGear.kMetresPerRotation : LowGear.kMetresPerRotation;
+        return kMetresPerRotation;
     }
 
     /**

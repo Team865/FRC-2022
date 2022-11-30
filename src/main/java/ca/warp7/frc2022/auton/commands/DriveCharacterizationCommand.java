@@ -43,7 +43,7 @@ public class DriveCharacterizationCommand extends CommandBase {
 
         // Set the update rate instead of using flush because of a ntcore bug
         // -> probably don't want to do this on a robot in competition
-        ntInstance.setUpdateRate(0.010);
+        // ntInstance.setUpdateRate(0.010); disabling because it says it's bad?
     }
 
     @Override

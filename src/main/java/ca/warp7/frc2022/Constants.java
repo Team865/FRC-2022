@@ -35,12 +35,14 @@ public final class Constants {
 
     public static final int kDriveLeftMasterID = 31;
     public static final int kDriveLeftFollowerID = 32;
+    public static final int kDriveLeftSecondFollowerID = 33;
 
     public static final int kDriveRightMasterID = 21;
     public static final int kDriveRightFollowerID = 22;
+    public static final int kDriveRightSecondFollowerID = 23;
 
-    public static final int kClimbMasterID = 41;
-    public static final int kClimbFollowerID = 42;
+
+    public static final int kClimbID = 41;
 
     public static final int kElevatorID = 51;
 
@@ -52,14 +54,19 @@ public final class Constants {
 
     //public static final int kControlPanelManipulatorID = -1;
 
-    // PH ID
-    public static final int kDriveShifterID = 0;
+    // Pneumatic IDs
     public static final int kIntakePistonID = 1;
+    public static final int kFirstPistonsID = 0;
+    public static final int kSecondPistonsID = 2;
 
     // DIO IDs
 
     public static final int kBeamBreakLowID = 1;
     public static final int kBeamBreakHighID = 2;
+    public static final int kLimitSwitchID = 5;
+
+    // Elevator feed speed during auto
+    public static final double kAutoFeedSpeed = 0.3;
 
     // Elevator Tuning
     public static final double kElevatorSpeed = 0.20;
@@ -70,37 +77,46 @@ public final class Constants {
     // Launcher Tuning
     public static final boolean kIsLauncherLobber = true;
 
-    // kLobber controls shooter speed
-    public static final double kLobberRPS = 24.0;
-    public static final double kShooterRPS = 47.0;
+    // Climber Tuning
+    public static final double kClimberTicksPerRotation = 2048.0;
+    public static final double kClimberGearRatio = 9;
+    public static final double kClimberMax = 82.5;
+    public static final double kClimberMin = -2.5; // Under 0 to account for rope tension.
+    public static final double kClimberRung = 10.2;
+    public static final double kTravelFromRungToMax = 84;
+
+
+    // kLobber controls shooter speed. Shooter no longer has manual speed control.
+    // public static final double kLobberRPS = 25.5;
+    // public static double kShooterRPS = 70;
 
     public static final double kLauncherTicksPerRotation = 2048.0;
     public static final double kLauncherVelocityFrequency = 0.1;
-    public static final double kLauncherGearRatio = 16.0/36.0;
+    public static final double kLauncherGearRatio = 1;
 
     // Tuning for the launcher's PID
-    public static final double kLauncherP = 0.001;
-    public static final double kLauncherI = 0.005;
+    public static final double kLauncherP = 0.0;
+    public static final double kLauncherI = 0.0;
     public static final double kLauncherD = 0.0;
     // This one kinda works like a RPS to voltage ratio.
-    public static final double kLauncherF = 0.022;
+    public static final double kLauncherF = 0.00927;
 
     // Drive Train Tuning
 
-    public static final double kLowGearRampRate = 0.15;
+    public static final double kLowGearRampRate = 0.20;
     public static final double kHighGearRampRate = 0.3;
 
     public static final PID kAutonLowGearVelocityPID =
-            new PID(0.2, 0.0, 0.0, 0.0);
+        new PID(0.2, 0.0, 0.0, 0.0);
     public static final PID kTeleopLowGearVelocityPID =
-            new PID(0.0, 0.0, 0.0, 0.0);
+        new PID(0.0, 0.0, 0.0, 0.0);
     public static final PID kTeleopHighGearVelocityPID =
-            new PID(0.0, 0.0, 0.0, 0.0);
+        new PID(0.0, 0.0, 0.0, 0.0);
     public static final PID kVisionAlignmentYawPID =
-            new PID(0.025, 0.0, 0.002, 0.0);
+        new PID(0.005, 0.0, 0.001, 0.0);
     // units: degrees => percent
     public static final PID kQuickTurnPID =
-            new PID(0.04, 0.0, 0.0, 0.0);
+        new PID(0.04, 0.0, 0.0, 0.0);
 
 
     // Drive Train Constants
@@ -109,32 +125,21 @@ public final class Constants {
     public static final double kWheelRadius = 0.0760858711932102; // metres
     public static final double kMaxVoltage = 12.0; // volts
 
-    public static class LowGear {
-        public static final double kGearRatio = 42.0 / 10.0 * 60.0 / 14.0; // 18.0
 
-        public static final double kMetresPerRotation =
-                (2 * Math.PI * kWheelRadius) / kGearRatio; // ticks/m
+    public static final double kGearRatio = 9.47;
+    public static final double kMetresPerRotation =
+        (2 * Math.PI * kWheelRadius) / kGearRatio; // ticks/m
+    public static final SimpleMotorFeedforward kTransmission =
+        //new SimpleMotorFeedforward(0.68, 2.01, 0.26);
+        new SimpleMotorFeedforward(0.0353, 2.0634, 0.30254);
 
-        public static final SimpleMotorFeedforward kTransmission =
-                new SimpleMotorFeedforward(0.0353, 4.140, 0.401);
 
-    }
-
-    public static class HighGear {
-        public static final double kGearRatio = 42.0 / 10.0 * 50.0 / 24.0; // 8.75
-
-        public static final double kMetresPerRotation =
-                (2 * Math.PI * kWheelRadius) / kGearRatio; // m/rotation
-
-        public static final SimpleMotorFeedforward kTransmission =
-                new SimpleMotorFeedforward(0.218, 2.01, 0.307);
-    }
-
+    
     @SuppressWarnings("unused")
     private static class PracticeRobotDetector {
         private static final String kPracticeRobotAddress = "00-80-2F-27-06-8E";
         private static final boolean kIsPracticeRobot =
-                NetworkUtil.getMACAddress().equals(kPracticeRobotAddress);
+        NetworkUtil.getMACAddress().equals(kPracticeRobotAddress);
     }
 
     public static boolean isPracticeRobot() {

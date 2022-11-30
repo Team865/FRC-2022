@@ -5,6 +5,9 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import ca.warp7.frc2022.Constants;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
@@ -68,6 +71,21 @@ public class Limelight implements Subsystem {
             prevAngle = angle;
         }
         prevEnabled = enabled;
+
+        SmartDashboard.putNumber("Distance from hub", getCameraToTarget());
+    }
+
+
+    /**
+     * @return best RPS for shooter depending on distance.
+     */
+    public Double calculateBestRPS() {
+        double distance = this.getCameraToTarget();
+
+
+        // 0.0687 + 53.5x + -8.04x^2
+        //return  MathUtil.clamp(73.7 + (-17.9 * distance) + (14.3 * Math.pow(distance, 2)) + (-2.19 * Math.pow(distance, 3)), 0, 100);
+         return  MathUtil.clamp(69.1 + (-9.38 * distance) + (9.43 * Math.pow(distance, 2)) + (-1.33 * Math.pow(distance, 3)), 0, 100);
     }
 
     public void setSmoothHorizontalAngle(Double smoothHorizontalAngle) {
@@ -94,23 +112,18 @@ public class Limelight implements Subsystem {
         return tl.getDouble(0.0) / 1000;
     }
 
-    // the center location of the power ports on the field
-    private static final Pose2d kTargetToField = new Pose2d(0.0, 1.7, Rotation2d.fromDegrees(-180));
+    // the center location of the cargo hub
+    private static final Pose2d kTargetToField = new Pose2d(8.3, 4, Rotation2d.fromDegrees(0));
 
     // the centre height of the target
-    // 81.25 in (bottom) and 17 in (height) -> 89.75in = 2.27965 m
-    private static final double kTargetCentreHeight = 2.26;
+    // high goal 8'8" = 2.6416m
+    private static final double kTargetCentreHeight = 2.6416;
 
-    // the height of the camera relative to the carpet in metres todo
-    private static final double kCameraHeight = 34.0 * 0.0254;
-
-    // the transform from the camera lens to the centre of rotation of the robot todo
-    private static final Transform2d kCameraToRobot =
-            new Transform2d(new Translation2d(0.0, 0.0), new Rotation2d());
+    // the height of the camera (lense and in meters) relattive to the floor
+    private static final double kCameraHeight = 1;
 
     // the angle that the camera is mounted relative to the horizontal in degrees.
-    // up is positive todo
-    private static final double kCameraMountingAngle = 22.0;
+    private static final double kCameraMountingAngle = 40;
 
     // the relative height between the camera and the target
     private static final double kCameraToTargetHeight = kTargetCentreHeight - kCameraHeight;
